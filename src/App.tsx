@@ -1,9 +1,14 @@
+import React from 'react';
 import './App.css';
+import MenuPage from "./pages/MenuPage";
+import AdminPage from "./pages/AdminPage";
 
-export default function App() {
-  return (
-      <h1 className="text-3xl font-bold underline">
-        Hello world!
-      </h1>
-  )
-}
+const App: React.FC = () => {
+    return (
+        <div>
+            <AdminPage/>
+        </div>
+    );
+};
+
+export default App;
