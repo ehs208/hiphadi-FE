@@ -2,7 +2,53 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Pretendard-Black";
+  src: url("./public/fonts/Pretendard-Black.ttf");
+}
+
+@font-face {
+  font-family: "Pretendard-ExtraBold";
+  src: url("./public/fonts/Pretendard-ExtraBold.ttf");
+}
+
+@font-face {
+  font-family: "Pretendard-Bold";
+  src: url("./public/fonts/Pretendard-Bold.ttf");
+}
+
+@font-face {
+  font-family: "Pretendard-SemiBold";
+  src: url("./public/fonts/Pretendard-SemiBold.ttf");
+}
+
+@font-face {
+  font-family: "Pretendard-Medium";
+  src: url("./public/fonts/Pretendard-Medium.ttf");
+}
+
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("./public/fonts/Pretendard-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Pretendard-Light";
+  src: url("./public/fonts/Pretendard-Light.ttf");
+}
+
+@font-face {
+  font-family: "Pretendard-ExtraLight";
+  src: url("./public/fonts/Pretendard-ExtraLight.ttf");
+}
+
+@font-face {
+  font-family: "Pretendard-Thin";
+  src: url("./public/fonts/Pretendard-Thin.ttf");
+}
+
 body {
+  @apply font-PretendardBlack;
   margin: 0;
   padding: 0;
   height: auto;
@@ -11,9 +57,6 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font: 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Oxygen",
-  "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "NanumSquareNeo",
-  sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

@@ -1,14 +1,20 @@
 import React from 'react';
 import './App.css';
-import MenuPage from "./pages/MenuPage";
-import AdminPage from "./pages/AdminPage";
+import Header from './components/user/Header';
+import MenuPage from './pages/user/MenuPage';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 const App: React.FC = () => {
-    return (
-        <div>
-            <AdminPage/>
-        </div>
-    );
+  return (
+    <div>
+      <QueryClientProvider client={queryClient}>
+        <Header></Header>
+        <MenuPage></MenuPage>
+      </QueryClientProvider>
+    </div>
+  );
 };
 
 export default App;
