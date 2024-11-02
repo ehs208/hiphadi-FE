@@ -1,13 +1,11 @@
 import React from 'react';
 import ProductList from '../../components/user/ProductList';
+import Tabs from '@components/user/Tabs';
 
 const MenuPage: React.FC = () => {
   return (
-    <div className="max-w-md mx-auto bg-white shadow-md rounded-md overflow-hidden">
-      {/*<Tabs />*/}
-      <div>
-        <ProductList />
-      </div>
+    <div>
+      <ProductList />
     </div>
   );
 };

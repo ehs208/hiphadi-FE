@@ -1,21 +1,67 @@
-const Tabs: React.FC = () => {
+import React, { useEffect, useState } from 'react';
+
+interface TabsProps {
+  categories: string[];
+}
+
+const Tabs: React.FC<TabsProps> = ({ categories }) => {
+  const [isFixed, setIsFixed] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  let activityTimeout: NodeJS.Timeout;
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const tabsElement = document.getElementById('tabs-container');
+      if (tabsElement) {
+        const tabsOffsetTop = tabsElement.offsetTop;
+        setIsFixed(window.scrollY > tabsOffsetTop);
+      }
+    };
+
+    const handleUserActivity = () => {
+      setIsVisible(true);
+      clearTimeout(activityTimeout);
+      activityTimeout = setTimeout(() => {
+        setIsVisible(false);
+      }, 2000); // 2초 동안 활동이 없으면 투명하게 만듦
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('mousemove', handleUserActivity);
+    window.addEventListener('touchstart', handleUserActivity);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('mousemove', handleUserActivity);
+      window.removeEventListener('touchstart', handleUserActivity);
+      clearTimeout(activityTimeout);
+    };
+  }, []);
+
+  const handleScrollToCategory = (category: string) => {
+    const element = document.getElementById(category);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
-    <div
-      className="overflow-x-auto whitespace-nowrap p-4 border-b border-gray-200 bg-gray-100"
-      style={{ width: 'calc(4 * 100px)' }}
-    >
-      <button className="inline-block text-sm font-semibold text-black border-b-2 border-black w-24">
-        대표메뉴
-      </button>
-      <button className="inline-block text-sm text-gray-500 w-24">
-        인기 반반메뉴
-      </button>
-      <button className="inline-block text-sm text-gray-500 w-24">
-        가성비 세트메뉴
-      </button>
-      <button className="inline-block text-sm text-gray-500 w-24">
-        사이드메뉴
-      </button>
+    <div id="tabs-container" className="w-full">
+      <div
+        id="tabs"
+        className={`flex ${isFixed ? 'fixed top-0 left-1/2 transform -translate-x-1/2 z-10 bg-[#1f1f1f]' : 'sticky top-0'} overflow-x-auto whitespace-nowrap items-center w-[370px] transition-all ${isFixed ? 'shadow-lg' : ''} ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+        style={{ transition: 'opacity 0.5s' }}
+      >
+        {categories.map((category) => (
+          <button
+            key={category}
+            className="flex-1 text-sm font-PretendardBold text-white py-6"
+            onClick={() => handleScrollToCategory(category)}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };
