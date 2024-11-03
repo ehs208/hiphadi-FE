@@ -54,7 +54,7 @@ body {
     padding: 0;
     height: auto;
     min-height: 100vh; /* Ensure the body covers the viewport height */
-    max-width: 370px; /* Set the maximum width to 370px */
+    /*max-width: 370px; !* Set the maximum width to 370px *!*/
     width: 100%; /* Make the width responsive */
     overflow-y: auto;
     display: flex;
@@ -64,3 +64,9 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
+/*@media (min-width: 500px) {*/
+/*    body {*/
+/*        max-width: 370px; !* Set the width to 370px when the screen width is 500px or more *!*/
+/*    }*/
+/*}*/

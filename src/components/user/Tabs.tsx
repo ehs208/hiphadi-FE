@@ -30,6 +30,11 @@ const Tabs: React.FC<TabsProps> = ({ categories }) => {
     window.addEventListener('mousemove', handleUserActivity);
     window.addEventListener('touchstart', handleUserActivity);
 
+    const tabsElement = document.getElementById('tabs');
+    if (tabsElement) {
+      tabsElement.scrollLeft = 0;
+    }
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('mousemove', handleUserActivity);
@@ -41,21 +46,23 @@ const Tabs: React.FC<TabsProps> = ({ categories }) => {
   const handleScrollToCategory = (category: string) => {
     const element = document.getElementById(category);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const yOffset = -100;
+      const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
     }
   };
 
   return (
-    <div id="tabs-container" className="w-full">
+    <div id="tabs-container" className="w-screen overflow-x-auto">
       <div
         id="tabs"
-        className={`flex ${isFixed ? 'fixed top-0 left-1/2 transform -translate-x-1/2 z-10 bg-[#1f1f1f]' : 'sticky top-0'} overflow-x-auto whitespace-nowrap items-center w-[370px] transition-all ${isFixed ? 'shadow-lg' : ''} ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+        className={`${isFixed ? 'fixed top-0 left-0 right-0 z-10 bg-[#1f1f1f]' : ''}  w-full overflow-x-scroll whitespace-nowrap items-center transition-all ${isFixed ? 'shadow-lg' : ''} ${isVisible || !isFixed ? 'opacity-100' : 'opacity-0'}`}
         style={{ transition: 'opacity 0.5s' }}
       >
         {categories.map((category) => (
           <button
             key={category}
-            className="flex-1 text-sm font-PretendardBold text-white py-6"
+            className="flex-auto text-sm font-PretendardBold text-white py-6 px-4"
             onClick={() => handleScrollToCategory(category)}
           >
             {category}

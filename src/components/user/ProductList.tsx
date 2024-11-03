@@ -32,12 +32,12 @@ export default function ProductList() {
   const categories = groupedData ? Object.keys(groupedData) : [];
 
   return (
-    <div className="flex flex-col gap-y-4 text-white pt-4">
+    <div className="flex flex-col w-screen gap-y-4 text-white p-4">
       <Tabs categories={categories} />
       {groupedData &&
         categories.map((category) => (
           <div key={category} id={category}>
-            <h2 className="text-xl font-bold mb-2">{category}</h2>
+            <div className="text-xl font-bold mb-2">{category}</div>
             {groupedData[category].map((product) => (
               <div
                 key={product.id}
