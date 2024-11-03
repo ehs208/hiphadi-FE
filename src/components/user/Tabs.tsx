@@ -66,7 +66,7 @@ const Tabs: React.FC<TabsProps> = ({ categories }) => {
         {categories.map((category) => (
           <button
             key={category}
-            className="flex-auto text-sm font-PretendardBold text-white py-6 px-4"
+            className="flex-auto text-sm font-PretendardBold text-white p-4"
             onClick={() => handleScrollToCategory(category)}
           >
             {category}

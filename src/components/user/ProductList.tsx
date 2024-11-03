@@ -76,12 +76,14 @@ export default function ProductList() {
       {groupedData &&
         categories.map((category) => (
           <div key={category}>
-            <h2 className="text-xl font-bold mb-2">{category}</h2>
+            <div id={category} className="text-xl font-bold mb-2">
+              {category}
+            </div>
             {groupedData[category].map((product) => (
               <div
                 key={product.id}
                 className={`flex items-center p-4 shadow-md rounded-md mb-2 ${
-                  clickedProductId === product.id ? 'bg-green-100' : ''
+                  clickedProductId === product.id ? 'bg-slate-600' : ''
                 }`}
                 onClick={() => handleProductClick(product)}
               >
