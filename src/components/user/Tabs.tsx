@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 interface TabsProps {
   categories: string[];
@@ -7,7 +7,7 @@ interface TabsProps {
 const Tabs: React.FC<TabsProps> = ({ categories }) => {
   const [isFixed, setIsFixed] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
-  let activityTimeout: NodeJS.Timeout;
+  const activityTimeout = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,8 +20,10 @@ const Tabs: React.FC<TabsProps> = ({ categories }) => {
 
     const handleUserActivity = () => {
       setIsVisible(true);
-      clearTimeout(activityTimeout);
-      activityTimeout = setTimeout(() => {
+      if (activityTimeout.current) {
+        clearTimeout(activityTimeout.current);
+      }
+      activityTimeout.current = setTimeout(() => {
         setIsVisible(false);
       }, 2000); // 2초 동안 활동이 없으면 투명하게 만듦
     };
@@ -39,7 +41,9 @@ const Tabs: React.FC<TabsProps> = ({ categories }) => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('mousemove', handleUserActivity);
       window.removeEventListener('touchstart', handleUserActivity);
-      clearTimeout(activityTimeout);
+      if (activityTimeout.current) {
+        clearTimeout(activityTimeout.current);
+      }
     };
   }, []);
 
