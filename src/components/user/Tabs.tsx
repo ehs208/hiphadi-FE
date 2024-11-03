@@ -57,7 +57,7 @@ const Tabs: React.FC<TabsProps> = ({ categories }) => {
   };
 
   return (
-    <div id="tabs-container" className="w-screen overflow-x-auto">
+    <div id="tabs-container" className="w-full overflow-x-hidden">
       <div
         id="tabs"
         className={`${isFixed ? 'fixed top-0 left-0 right-0 z-10 bg-[#1f1f1f]' : ''}  w-full overflow-x-scroll whitespace-nowrap items-center transition-all ${isFixed ? 'shadow-lg' : ''} ${isVisible || !isFixed ? 'opacity-100' : 'opacity-0'}`}

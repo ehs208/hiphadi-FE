@@ -51,7 +51,7 @@ const Cart: React.FC = () => {
     <div>
       <button
         onClick={toggleCart}
-        className="fixed bottom-4 right-4 bg-black text-white p-3 rounded-full shadow-lg"
+        className="fixed bottom-4 right-4 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full shadow-lg transition duration-300"
       >
         <FaShoppingCart size={24} />
       </button>
@@ -62,10 +62,10 @@ const Cart: React.FC = () => {
           onClick={toggleCart}
         >
           <div
-            className={`bg-[#161616] w-5/6 h-5/6 p-4 overflow-y-auto rounded-2xl shadow-lg transition-transform duration-300 transform ${isAnimating ? 'scale-95 opacity-0' : 'scale-100 opacity-100'}`}
+            className={`bg-white w-5/6 max-w-lg h-5/6 p-6 overflow-y-auto rounded-2xl shadow-lg transition-transform duration-300 transform ${isAnimating ? 'scale-95 opacity-0' : 'scale-100 opacity-100'}`}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="text-lg font-PretendardSemiBold mb-4 text-white">
+            <div className="text-lg font-semibold mb-4 text-gray-800">
               장바구니
             </div>
             {cartItems.length > 0 ? (
@@ -73,30 +73,32 @@ const Cart: React.FC = () => {
                 {cartItems.map((item) => (
                   <div
                     key={item.id}
-                    className="flex justify-between items-center mb-2"
+                    className="flex justify-between items-center mb-2 p-2 border-b border-gray-200"
                   >
-                    <div className="text-white">{item.name}</div>
-                    <div className="text-white">{item.price}원</div>
-                    <div className="text-white">수량: {item.quantity}</div>
+                    <div className="text-gray-800">{item.name}</div>
+                    <div className="text-gray-800">{item.price}원</div>
+                    <div className="text-gray-800">수량: {item.quantity}</div>
                   </div>
                 ))}
-                <div className="flex justify-between items-end mt-auto text-white">
+                <div className="flex justify-between items-center mt-4 text-gray-800">
                   <button
                     onClick={handleClearCart}
-                    className="mt-4 bg-red-500 text-white px-4 py-2 rounded-md shadow-lg"
+                    className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md shadow-lg transition duration-300"
                   >
                     장바구니 초기화
                   </button>
-                  총 가격:{' '}
-                  {cartItems.reduce(
-                    (acc, item) => acc + item.price * item.quantity,
-                    0
-                  )}
-                  원
+                  <div className="text-lg font-semibold">
+                    총 가격:{' '}
+                    {cartItems.reduce(
+                      (acc, item) => acc + item.price * item.quantity,
+                      0
+                    )}
+                    원
+                  </div>
                 </div>
               </>
             ) : (
-              <p className="text-white">장바구니에 아이템이 없습니다.</p>
+              <p className="text-gray-800">장바구니에 아이템이 없습니다.</p>
             )}
           </div>
         </div>
