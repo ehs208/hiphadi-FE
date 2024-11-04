@@ -42,7 +42,7 @@ export default function ProductList() {
     status: string;
   }) => {
     if (product.status === 'SOLD_OUT') {
-      setMessage('품절인 상품입니다');
+      setMessage('품절된 상품입니다');
       setTimeout(() => {
         setMessage('');
       }, 1000);
@@ -82,8 +82,8 @@ export default function ProductList() {
             {groupedData[category].map((product) => (
               <div
                 key={product.id}
-                className={`flex items-center p-4 shadow-md rounded-md mb-2 ${
-                  clickedProductId === product.id ? 'bg-slate-600' : ''
+                className={`flex items-center p-4 shadow-md rounded-md mb-2 transition-colors duration-500 ${
+                  clickedProductId === product.id ? 'bg-slate-800' : ''
                 }`}
                 onClick={() => handleProductClick(product)}
               >
@@ -104,7 +104,7 @@ export default function ProductList() {
                     className={`text-sm font-PretendardSemiBold ${
                       product.status === 'SOLD_OUT'
                         ? 'text-gray-500'
-                        : 'text-gray-500'
+                        : 'text-gray-300'
                     }`}
                   >
                     {product.description}
@@ -122,7 +122,7 @@ export default function ProductList() {
           </div>
         ))}
       {message && (
-        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 font-PretendardSemiBold bg-slate-600 text-white px-4 py-2 rounded-md shadow-lg">
+        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 font-PretendardSemiBold bg-slate-600 text-white px-4 py-2 rounded-md shadow-lg transition-opacity duration-500">
           {message}
         </div>
       )}

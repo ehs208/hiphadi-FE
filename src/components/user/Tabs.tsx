@@ -7,6 +7,7 @@ interface TabsProps {
 const Tabs: React.FC<TabsProps> = ({ categories }) => {
   const [isFixed, setIsFixed] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const activityTimeout = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -48,12 +49,16 @@ const Tabs: React.FC<TabsProps> = ({ categories }) => {
   }, []);
 
   const handleScrollToCategory = (category: string) => {
+    setActiveCategory(category);
     const element = document.getElementById(category);
     if (element) {
       const yOffset = -100;
       const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
       window.scrollTo({ top: y, behavior: 'smooth' });
     }
+    setTimeout(() => {
+      setActiveCategory(null);
+    }, 500); // 0.5초 후에 원래 색으로 돌아옴
   };
 
   return (
@@ -66,7 +71,7 @@ const Tabs: React.FC<TabsProps> = ({ categories }) => {
         {categories.map((category) => (
           <button
             key={category}
-            className="flex-auto text-sm font-PretendardBold text-white p-4"
+            className={`flex-auto text-sm font-PretendardBold text-white p-4 transition-colors duration-500 ${activeCategory === category ? 'bg-slate-800' : ''}`}
             onClick={() => handleScrollToCategory(category)}
           >
             {category}

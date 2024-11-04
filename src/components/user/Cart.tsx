@@ -12,6 +12,7 @@ const Cart: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [itemsToRemove, setItemsToRemove] = useState<number[]>([]);
 
   const toggleCart = () => {
     if (isOpen) {
@@ -28,6 +29,38 @@ const Cart: React.FC = () => {
   const handleClearCart = () => {
     sessionStorage.removeItem('cart');
     setCartItems([]);
+  };
+
+  const handleIncreaseQuantity = (id: number) => {
+    const updatedCartItems = cartItems.map((item) =>
+      item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+    );
+    setCartItems(updatedCartItems);
+    sessionStorage.setItem('cart', JSON.stringify(updatedCartItems));
+  };
+
+  const handleDecreaseQuantity = (id: number) => {
+    const updatedCartItems = cartItems.map((item) =>
+      item.id === id ? { ...item, quantity: item.quantity - 1 } : item
+    );
+
+    const itemToRemove = updatedCartItems.find(
+      (item) => item.id === id && item.quantity === 0
+    );
+    if (itemToRemove) {
+      setItemsToRemove((prev) => [...prev, id]);
+      setTimeout(() => {
+        const filteredCartItems = updatedCartItems.filter(
+          (item) => item.id !== id
+        );
+        setCartItems(filteredCartItems);
+        sessionStorage.setItem('cart', JSON.stringify(filteredCartItems));
+        setItemsToRemove((prev) => prev.filter((itemId) => itemId !== id));
+      }, 300); // 애니메이션 지속 시간과 일치시킴
+    } else {
+      setCartItems(updatedCartItems);
+      sessionStorage.setItem('cart', JSON.stringify(updatedCartItems));
+    }
   };
 
   useEffect(() => {
@@ -62,10 +95,10 @@ const Cart: React.FC = () => {
           onClick={toggleCart}
         >
           <div
-            className={`bg-white w-5/6 max-w-lg h-5/6 p-6 overflow-y-auto rounded-2xl shadow-lg transition-transform duration-300 transform ${isAnimating ? 'scale-95 opacity-0' : 'scale-100 opacity-100'}`}
+            className={`bg-[#1f1f1f] w-5/6 max-w-lg h-5/6 p-6 overflow-y-auto rounded-2xl shadow-lg transition-transform duration-300 transform ${isAnimating ? 'scale-95 opacity-0' : 'scale-100 opacity-100'}`}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="text-lg font-semibold mb-4 text-gray-800">
+            <div className="text-lg font-semibold mb-4 text-white">
               장바구니
             </div>
             {cartItems.length > 0 ? (
@@ -73,21 +106,41 @@ const Cart: React.FC = () => {
                 {cartItems.map((item) => (
                   <div
                     key={item.id}
-                    className="flex justify-between items-center mb-2 p-2 border-b border-gray-200"
+                    className={`flex w-full items-center mb-2 p-2 border-b border-gray-200 transition duration-300 transform ${itemsToRemove.includes(item.id) ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}
                   >
-                    <div className="text-gray-800">{item.name}</div>
-                    <div className="text-gray-800">{item.price}원</div>
-                    <div className="text-gray-800">수량: {item.quantity}</div>
+                    <div className="text-white w-1/2">{item.name}</div>
+                    <div className="flex w-1/2 items-center">
+                      <div className="flex justify-center text-white w-full font-PretendardSemiBold">
+                        {item.price}원
+                      </div>
+                      <div className="flex justify-end w-full items-center">
+                        <button
+                          onClick={() => handleDecreaseQuantity(item.id)}
+                          className="bg-red-500 text-white px-2 py-1 rounded-md"
+                        >
+                          -
+                        </button>
+                        <div className="text-white mx-2 font-PretendardSemiBold">
+                          {item.quantity}
+                        </div>
+                        <button
+                          onClick={() => handleIncreaseQuantity(item.id)}
+                          className="bg-green-500 text-white px-2 py-1 rounded-md"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 ))}
                 <div className="flex justify-between items-center mt-4 text-gray-800">
                   <button
                     onClick={handleClearCart}
-                    className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md shadow-lg transition duration-300"
+                    className="font-PretendardLight bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md shadow-lg transition duration-300"
                   >
                     장바구니 초기화
                   </button>
-                  <div className="text-lg font-semibold">
+                  <div className="text-lg text-white font-PretendardSemiBold">
                     총 가격:{' '}
                     {cartItems.reduce(
                       (acc, item) => acc + item.price * item.quantity,
@@ -98,7 +151,7 @@ const Cart: React.FC = () => {
                 </div>
               </>
             ) : (
-              <p className="text-gray-800">장바구니에 아이템이 없습니다.</p>
+              <p className="text-white">장바구니에 아이템이 없습니다.</p>
             )}
           </div>
         </div>
