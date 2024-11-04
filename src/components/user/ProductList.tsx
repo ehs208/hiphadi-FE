@@ -76,7 +76,10 @@ export default function ProductList() {
       {groupedData &&
         categories.map((category) => (
           <div key={category}>
-            <div id={category} className="text-xl font-bold mb-2">
+            <div
+              id={category}
+              className="text-xl font-PretendardExtraBold mb-2"
+            >
               {category}
             </div>
             {groupedData[category].map((product) => (
@@ -104,7 +107,7 @@ export default function ProductList() {
                     className={`text-sm font-PretendardSemiBold ${
                       product.status === 'SOLD_OUT'
                         ? 'text-gray-500'
-                        : 'text-gray-300'
+                        : 'text-gray-400'
                     }`}
                   >
                     {product.description}
