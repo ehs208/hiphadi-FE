@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { productListAPI } from '@api/user/productAPI';
 import Tabs from './Tabs';
 import React, { useState } from 'react';
+import { IoMdStar } from 'react-icons/io';
 
 interface ProductListData {
   id: number;
@@ -10,6 +11,7 @@ interface ProductListData {
   price: number;
   category: string;
   status: string;
+  isRecommend: string;
 }
 
 export default function ProductList() {
@@ -92,11 +94,18 @@ export default function ProductList() {
               >
                 <div className="flex-1">
                   <div
-                    className={`font-PretendardBlack text-lg ${
+                    className={`font-PretendardBold text-lg ${
                       product.status === 'SOLD_OUT' ? 'text-gray-500' : ''
                     }`}
                   >
-                    {product.name}
+                    <div className="flex items-center">
+                      {product.name}
+                      <div className="relative">
+                        {product.isRecommend === 'RECOMMEND' && (
+                          <IoMdStar className="text-amber-400 absolute bottom-0 left-0 items-center" />
+                        )}
+                      </div>
+                    </div>
                     {product.status === 'SOLD_OUT' && (
                       <div className="text-sm font-PretendardSemiBold text-red-500">
                         품절인 상품입니다
@@ -104,7 +113,7 @@ export default function ProductList() {
                     )}
                   </div>
                   <div
-                    className={`text-sm font-PretendardSemiBold ${
+                    className={`text-sm font-PretendardMedium ${
                       product.status === 'SOLD_OUT'
                         ? 'text-gray-500'
                         : 'text-gray-400'
