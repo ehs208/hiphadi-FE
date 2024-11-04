@@ -27,8 +27,12 @@ const Cart: React.FC = () => {
   };
 
   const handleClearCart = () => {
-    sessionStorage.removeItem('cart');
-    setCartItems([]);
+    setItemsToRemove(cartItems.map((item) => item.id));
+    setTimeout(() => {
+      sessionStorage.removeItem('cart');
+      setCartItems([]);
+      setItemsToRemove([]);
+    }, 300); // 애니메이션 지속 시간과 일치시킴
   };
 
   const handleIncreaseQuantity = (id: number) => {
@@ -116,16 +120,16 @@ const Cart: React.FC = () => {
                       <div className="flex justify-end w-full items-center">
                         <button
                           onClick={() => handleDecreaseQuantity(item.id)}
-                          className="bg-red-500 text-white px-2 py-1 rounded-md"
+                          className="bg-red-800 hover:bg-red-900 text-white px-2 py-1 rounded-md transition duration-300"
                         >
                           -
                         </button>
-                        <div className="text-white mx-2 font-PretendardSemiBold">
+                        <div className="text-white mx-4 font-PretendardSemiBold text-lg">
                           {item.quantity}
                         </div>
                         <button
                           onClick={() => handleIncreaseQuantity(item.id)}
-                          className="bg-green-500 text-white px-2 py-1 rounded-md"
+                          className="bg-green-800 hover:bg-green-900 text-white px-2 py-1 rounded-md transition duration-300"
                         >
                           +
                         </button>
@@ -136,7 +140,7 @@ const Cart: React.FC = () => {
                 <div className="flex justify-between items-center mt-4 text-gray-800">
                   <button
                     onClick={handleClearCart}
-                    className="font-PretendardLight bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md shadow-lg transition duration-300"
+                    className="font-PretendardLight bg-slate-800 hover:bg-slate-900 text-white px-4 py-2 rounded-md shadow-lg transition duration-300"
                   >
                     장바구니 초기화
                   </button>
