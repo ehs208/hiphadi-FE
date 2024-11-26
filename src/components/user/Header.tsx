@@ -25,6 +25,7 @@ const Header: React.FC = () => {
         <div className="text-sm font-PretendardThin">
           주문은 카운터에 오셔서 부탁드립니다.
         </div>
+        <div className="text-sm font-PretendardThin">화장실 비밀번호: 1234</div>
       </div>
     </div>
   );

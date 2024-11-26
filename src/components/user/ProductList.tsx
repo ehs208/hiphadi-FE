@@ -3,6 +3,7 @@ import { productListAPI } from '@api/user/productAPI';
 import Tabs from './Tabs';
 import React, { useState } from 'react';
 import { IoMdStar } from 'react-icons/io';
+import MenuDetailPage from '../../pages/user/MenuDetailPage'; // MenuDetailPage 컴포넌트 임포트
 
 interface ProductListData {
   id: number;
@@ -36,13 +37,9 @@ export default function ProductList() {
 
   const [message, setMessage] = useState('');
   const [clickedProductId, setClickedProductId] = useState<number | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleProductClick = (product: {
-    id: number;
-    name: string;
-    price: number;
-    status: string;
-  }) => {
+  const handleProductClick = (product: ProductListData) => {
     if (product.status === 'SOLD_OUT') {
       setMessage('품절된 상품입니다');
       setTimeout(() => {
@@ -51,25 +48,13 @@ export default function ProductList() {
       return;
     }
 
-    const storedProducts = JSON.parse(sessionStorage.getItem('cart') || '[]');
-    const existingProduct = storedProducts.find(
-      (p: any) => p.id === product.id
-    );
-
-    if (existingProduct) {
-      existingProduct.quantity += 1;
-    } else {
-      storedProducts.push({ ...product, quantity: 1 });
-    }
-
-    sessionStorage.setItem('cart', JSON.stringify(storedProducts));
-
     setClickedProductId(product.id);
-    setMessage('상품이 추가되었습니다');
-    setTimeout(() => {
-      setMessage('');
-      setClickedProductId(null);
-    }, 1000);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setClickedProductId(null);
   };
 
   return (
@@ -78,10 +63,7 @@ export default function ProductList() {
       {groupedData &&
         categories.map((category) => (
           <div key={category}>
-            <div
-              id={category}
-              className="text-xl font-PretendardExtraBold mb-2"
-            >
+            <div id={category} className="text-xl font-bold mb-2">
               {category}
             </div>
             {groupedData[category].map((product) => (
@@ -92,38 +74,34 @@ export default function ProductList() {
                 }`}
                 onClick={() => handleProductClick(product)}
               >
-                <div className="flex-1">
+                <div className="flex-1 relative">
                   <div
-                    className={`font-PretendardBold text-lg ${
+                    className={`font-bold text-lg ${
                       product.status === 'SOLD_OUT' ? 'text-gray-500' : ''
                     }`}
                   >
-                    <div className="flex items-center">
-                      {product.name}
-                      <div className="relative">
-                        {product.isRecommend === 'RECOMMEND' && (
-                          <IoMdStar className="text-amber-400 absolute bottom-0 left-0 items-center" />
-                        )}
-                      </div>
-                    </div>
+                    {product.name}
+                    {product.isRecommend === 'Recommend' && (
+                      <IoMdStar className="text-white absolute top-0 right-0 ml-2" />
+                    )}
                     {product.status === 'SOLD_OUT' && (
-                      <div className="text-sm font-PretendardSemiBold text-red-500">
+                      <div className="text-sm font-semibold text-red-500">
                         품절인 상품입니다
                       </div>
                     )}
                   </div>
                   <div
-                    className={`text-sm font-PretendardMedium ${
+                    className={`text-sm font-semibold ${
                       product.status === 'SOLD_OUT'
                         ? 'text-gray-500'
-                        : 'text-gray-400'
+                        : 'text-gray-300'
                     }`}
                   >
                     {product.description}
                   </div>
                 </div>
                 <div
-                  className={`text-right font-PretendardSemiBold text-lg ${
+                  className={`text-right font-semibold text-lg ${
                     product.status === 'SOLD_OUT' ? 'text-gray-500' : ''
                   }`}
                 >
@@ -134,8 +112,21 @@ export default function ProductList() {
           </div>
         ))}
       {message && (
-        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 font-PretendardSemiBold bg-slate-600 text-white px-4 py-2 rounded-md shadow-lg transition-opacity duration-500">
+        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 font-semibold bg-slate-600 text-white px-4 py-2 rounded-md shadow-lg transition-opacity duration-500">
           {message}
+        </div>
+      )}
+      {isModalOpen && clickedProductId !== null && (
+        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+          <div className="bg-white w-5/6 max-w-lg p-6 rounded-lg shadow-lg relative">
+            <button
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+              onClick={closeModal}
+            >
+              &times;
+            </button>
+            <MenuDetailPage id={clickedProductId} />
+          </div>
         </div>
       )}
     </div>
