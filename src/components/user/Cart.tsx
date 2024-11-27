@@ -155,7 +155,7 @@ const Cart: React.FC = () => {
                 </div>
               </>
             ) : (
-              <p className="text-white">장바구니에 아이템이 없습니다.</p>
+              <p className="text-white">장바구니에 상품이 없습니다.</p>
             )}
           </div>
         </div>

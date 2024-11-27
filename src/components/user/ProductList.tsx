@@ -3,7 +3,7 @@ import { productListAPI } from '@api/user/productAPI';
 import Tabs from './Tabs';
 import React, { useState } from 'react';
 import { IoMdStar } from 'react-icons/io';
-import MenuDetailPage from '../../pages/user/MenuDetailPage'; // MenuDetailPage 컴포넌트 임포트
+import { ProductDetail } from './ProductDetail';
 
 interface ProductListData {
   id: number;
@@ -117,17 +117,7 @@ export default function ProductList() {
         </div>
       )}
       {isModalOpen && clickedProductId !== null && (
-        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
-          <div className="bg-white w-5/6 max-w-lg p-6 rounded-lg shadow-lg relative">
-            <button
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-              onClick={closeModal}
-            >
-              &times;
-            </button>
-            <MenuDetailPage id={clickedProductId} />
-          </div>
-        </div>
+        <ProductDetail id={clickedProductId} onClose={closeModal} />
       )}
     </div>
   );
