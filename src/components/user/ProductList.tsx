@@ -58,25 +58,28 @@ export default function ProductList() {
   };
 
   return (
-    <div className="flex flex-col w-screen gap-y-4 text-white p-4">
+    <div className="flex flex-col w-screen gap-y-4  text-white p-4">
       <Tabs categories={categories} />
       {groupedData &&
         categories.map((category) => (
           <div key={category}>
-            <div id={category} className="text-xl font-bold mb-2">
+            <div
+              id={category}
+              className="text-xl font-PretendardExtraBold mb-2"
+            >
               {category}
             </div>
             {groupedData[category].map((product) => (
               <div
                 key={product.id}
-                className={`flex items-center p-4 shadow-md rounded-md mb-2 transition-colors duration-500 ${
+                className={`flex items-center p-4 shadow-md overflow-hidden rounded-md mb-2 transition-colors duration-500 ${
                   clickedProductId === product.id ? 'bg-slate-800' : ''
                 }`}
                 onClick={() => handleProductClick(product)}
               >
-                <div className="flex-1 relative">
+                <div className="flex-1 min-w-0 mr-4">
                   <div
-                    className={`font-bold text-lg ${
+                    className={`font-PretendardBold text-lg ${
                       product.status === 'SOLD_OUT' ? 'text-gray-500' : ''
                     }`}
                   >
@@ -85,13 +88,13 @@ export default function ProductList() {
                       <IoMdStar className="text-white absolute top-0 right-0 ml-2" />
                     )}
                     {product.status === 'SOLD_OUT' && (
-                      <div className="text-sm font-semibold text-red-500">
+                      <div className="text-sm font-PretendardSemiBold text-red-500">
                         품절인 상품입니다
                       </div>
                     )}
                   </div>
                   <div
-                    className={`text-sm font-semibold ${
+                    className={`text-sm font-PretendardMedium truncate max-w-[calc(100%-2rem)] ${
                       product.status === 'SOLD_OUT'
                         ? 'text-gray-500'
                         : 'text-gray-300'
@@ -101,7 +104,7 @@ export default function ProductList() {
                   </div>
                 </div>
                 <div
-                  className={`text-right font-semibold text-lg ${
+                  className={`flex-shrink-0 text-right font-PretendardSemiBold text-lg ${
                     product.status === 'SOLD_OUT' ? 'text-gray-500' : ''
                   }`}
                 >
@@ -112,7 +115,7 @@ export default function ProductList() {
           </div>
         ))}
       {message && (
-        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 font-semibold bg-slate-600 text-white px-4 py-2 rounded-md shadow-lg transition-opacity duration-500">
+        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 font-PretendardSemiBold bg-slate-600 text-white px-4 py-2 rounded-md shadow-lg transition-opacity duration-500">
           {message}
         </div>
       )}
