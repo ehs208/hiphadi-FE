@@ -16,7 +16,7 @@ interface ProductDetailData {
 
 interface ProductDetailProps {
   id: number;
-  onClose: () => void; // 모달을 닫는 함수
+  onClose: () => void;
 }
 
 export function ProductDetail({ id, onClose }: ProductDetailProps) {
@@ -30,6 +30,7 @@ export function ProductDetail({ id, onClose }: ProductDetailProps) {
     refetchOnMount: 'always',
   });
 
+  const [quantity, setQuantity] = useState(1);
   const [message, setMessage] = useState('');
 
   if (isLoading) return <div>Loading...</div>;
@@ -37,21 +38,34 @@ export function ProductDetail({ id, onClose }: ProductDetailProps) {
 
   const handleAddToCart = () => {
     const storedProducts = JSON.parse(sessionStorage.getItem('cart') || '[]');
-    const existingProduct = storedProducts.find(
+    const existingProductIndex = storedProducts.findIndex(
       (p: any) => p.id === productDetailData?.id
     );
 
-    if (existingProduct) {
-      existingProduct.quantity += 1;
+    if (existingProductIndex !== -1) {
+      // If product exists, update its quantity
+      storedProducts[existingProductIndex].quantity += quantity;
     } else {
-      storedProducts.push({ ...productDetailData, quantity: 1 });
+      // If product doesn't exist, add it with the specified quantity
+      storedProducts.push({
+        ...productDetailData,
+        quantity: quantity,
+      });
     }
 
     sessionStorage.setItem('cart', JSON.stringify(storedProducts));
-    setMessage('장바구니에 추가되었습니다');
+    setMessage(`장바구니에 ${quantity}개 추가되었습니다`);
     setTimeout(() => {
       setMessage('');
-    }, 2000); // 2초 후에 메시지 숨기기
+    }, 2000);
+  };
+
+  const decreaseQuantity = () => {
+    setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+  };
+
+  const increaseQuantity = () => {
+    setQuantity((prev) => prev + 1);
   };
 
   return (
@@ -79,7 +93,7 @@ export function ProductDetail({ id, onClose }: ProductDetailProps) {
               />
             </div>
             <div className="w-full md:w-1/2 md:pl-8 mt-4 md:mt-0">
-              <h1 className="text-3xl text-gray-900 font-bold mb-2">
+              <h1 className="text-3xl text-gray-900 font-Pretendardbold mb-2">
                 {productDetailData?.name}
               </h1>
               {productDetailData?.isRecommend === 'Recommend' && (
@@ -90,29 +104,46 @@ export function ProductDetail({ id, onClose }: ProductDetailProps) {
               <p className="text-gray-700 mb-4">
                 {productDetailData?.description}
               </p>
-              <p className="text-2xl font-semibold text-gray-900 mb-4">
+              <p className="text-2xl font-PretendardSemiBold text-gray-900 mb-4">
                 {productDetailData?.price}원
               </p>
-              <p className="text-gray-600 mb-2">
-                카테고리: {productDetailData?.category}
-              </p>
+
               <p
-                className={`text-sm font-semibold ${productDetailData?.status === 'SOLD_OUT' ? 'text-red-500' : 'text-green-500'}`}
+                className={`text-sm font-PretendardSemibold ${productDetailData?.status === 'SOLD_OUT' ? 'text-red-500' : 'text-green-500'}`}
               >
                 {productDetailData?.status === 'SOLD_OUT' ? '품절' : '판매 중'}
               </p>
               {productDetailData?.status !== 'SOLD_OUT' && (
-                <button
-                  onClick={handleAddToCart}
-                  className="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md shadow-lg transition duration-300"
-                >
-                  장바구니에 추가
-                </button>
+                <div className="flex items-center mt-4 space-x-4">
+                  <div className="flex items-center border border-blue-500 rounded-md">
+                    <button
+                      onClick={decreaseQuantity}
+                      className="px-3 py-1 bg-blue-100 text-blue-600 hover:bg-blue-200 rounded-l-md transition-colors"
+                    >
+                      -
+                    </button>
+                    <span className="px-4 py-1 bg-white text-blue-800 font-PretendardSemiBold">
+                      {quantity}
+                    </span>
+                    <button
+                      onClick={increaseQuantity}
+                      className="px-3 py-1 bg-blue-100 text-blue-600 hover:bg-blue-200 rounded-r-md transition-colors"
+                    >
+                      +
+                    </button>
+                  </div>
+                  <button
+                    onClick={handleAddToCart}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md shadow-lg transition duration-300"
+                  >
+                    장바구니에 추가
+                  </button>
+                </div>
               )}
             </div>
           </div>
           {message && (
-            <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-slate-700 text-white font-PretendardSemiBold px-4 py-2 rounded-md shadow-lg transition-opacity duration-500">
+            <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-slate-700 text-white font-PretendardSemiBold px-4 py-2 rounded-md shadow-lg transition-opacity duration-500 whitespace-nowrap">
               {message}
             </div>
           )}
