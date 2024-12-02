@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { FaShoppingCart } from 'react-icons/fa';
 
 interface CartItem {
   id: number;
@@ -125,7 +126,7 @@ const Cart: React.FC = () => {
         onClick={toggleCart}
         className="fixed bottom-4 right-4 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full shadow-lg transition duration-300 group"
       >
-        🛒
+        <FaShoppingCart />
         {cartItems.length > 0 && (
           <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-2 py-1 group-hover:bg-red-600">
             {cartItems.length}
