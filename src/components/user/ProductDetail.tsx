@@ -93,7 +93,7 @@ export function ProductDetail({ id, onClose }: ProductDetailProps) {
               />
             </div>
             <div className="w-full md:w-1/2 md:pl-8 mt-4 md:mt-0">
-              <h1 className="text-3xl text-gray-900 font-Pretendardbold mb-2">
+              <h1 className="text-2xl text-gray-900 font-PretendardBold mb-2">
                 {productDetailData?.name}
               </h1>
               {productDetailData?.isRecommend === 'Recommend' && (
@@ -101,7 +101,7 @@ export function ProductDetail({ id, onClose }: ProductDetailProps) {
                   <CiStar className="inline-block" />
                 </div>
               )}
-              <p className="text-gray-700 mb-4">
+              <p className="text-gray-700 mb-4 font-PretendardLight">
                 {productDetailData?.description}
               </p>
               <p className="text-2xl font-PretendardSemiBold text-gray-900 mb-4">

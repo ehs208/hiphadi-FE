@@ -8,6 +8,7 @@ import { ProductDetail } from './ProductDetail';
 interface ProductListData {
   id: number;
   name: string;
+  engName: string;
   description: string;
   price: number;
   category: string;
@@ -83,10 +84,15 @@ export default function ProductList() {
                       product.status === 'SOLD_OUT' ? 'text-gray-500' : ''
                     }`}
                   >
-                    {product.name}
-                    {product.isRecommend === 'Recommend' && (
-                      <IoMdStar className="text-white absolute top-0 right-0 ml-2" />
-                    )}
+                    <div className="flex items-center ">
+                      {product.name}
+                      {product.isRecommend === 'Recommend' && (
+                        <IoMdStar className="text-white absolute top-0 right-0 ml-2" />
+                      )}
+                      <div className="text-sm ml-1 font-PretendardLight text-gray-300">
+                        {product.engName}
+                      </div>
+                    </div>
                     {product.status === 'SOLD_OUT' && (
                       <div className="text-sm font-PretendardSemiBold text-red-500">
                         품절인 상품입니다
