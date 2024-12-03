@@ -59,7 +59,7 @@ export default function ProductList() {
   };
 
   return (
-    <div className="flex flex-col w-screen gap-y-4  text-white p-4">
+    <div className="flex flex-col w-screen gap-y-4 text-white p-4">
       <Tabs categories={categories} />
       {groupedData &&
         categories.map((category) => (
@@ -73,34 +73,43 @@ export default function ProductList() {
             {groupedData[category].map((product) => (
               <div
                 key={product.id}
-                className={`flex items-center p-4 shadow-md overflow-hidden rounded-md mb-2 transition-colors duration-500 ${
+                className={`flex items-start p-4 shadow-md overflow-hidden rounded-md mb-2 transition-colors duration-500 ${
                   clickedProductId === product.id ? 'bg-slate-800' : ''
                 }`}
                 onClick={() => handleProductClick(product)}
               >
-                <div className="flex-1 min-w-0 mr-4">
+                <div className="flex-1 min-w-0 mr-3">
                   <div
-                    className={`font-PretendardBold text-lg ${
+                    className={`font-PretendardBold flex flex-col text-base sm:text-lg ${
                       product.status === 'SOLD_OUT' ? 'text-gray-500' : ''
                     }`}
                   >
-                    <div className="flex items-center ">
-                      {product.name}
-                      {product.isRecommend === 'Recommend' && (
-                        <IoMdStar className="text-white absolute top-0 right-0 ml-2" />
-                      )}
-                      <div className="text-sm ml-1 font-PretendardLight text-gray-300">
-                        {product.engName}
+                    <div className="flex items-center min-w-0">
+                      <div className="flex items-center min-w-0 relative overflow-hidden">
+                        <span className="truncate leading-tight">
+                          {product.name}
+                        </span>
+                        {product.engName && (
+                          <span className="ml-2 text-sm font-PretendardLight text-gray-300 truncate">
+                            {product.engName}
+                          </span>
+                        )}
+                        {product.isRecommend === 'RECOMMEND' && (
+                          <IoMdStar
+                            className="flex-shrink-0 ml-1 text-yellow-400 text-xs"
+                            style={{ marginTop: '-2px' }}
+                          />
+                        )}
                       </div>
                     </div>
                     {product.status === 'SOLD_OUT' && (
-                      <div className="text-sm font-PretendardSemiBold text-red-500">
+                      <div className="text-sm font-PretendardSemiBold text-red-500 mt-0.5">
                         품절인 상품입니다
                       </div>
                     )}
                   </div>
                   <div
-                    className={`text-sm font-PretendardMedium truncate max-w-[calc(100%-2rem)] ${
+                    className={`text-sm font-PretendardMedium truncate mt-1 ${
                       product.status === 'SOLD_OUT'
                         ? 'text-gray-500'
                         : 'text-gray-300'
@@ -110,11 +119,11 @@ export default function ProductList() {
                   </div>
                 </div>
                 <div
-                  className={`flex-shrink-0 text-right font-PretendardSemiBold text-lg ${
+                  className={`flex-shrink-0 text-right font-PretendardSemiBold text-base sm:text-lg whitespace-nowrap ml-2 ${
                     product.status === 'SOLD_OUT' ? 'text-gray-500' : ''
                   }`}
                 >
-                  {product.price}원
+                  {product.price.toLocaleString()}원
                 </div>
               </div>
             ))}

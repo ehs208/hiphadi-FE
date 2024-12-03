@@ -43,10 +43,8 @@ export function ProductDetail({ id, onClose }: ProductDetailProps) {
     );
 
     if (existingProductIndex !== -1) {
-      // If product exists, update its quantity
       storedProducts[existingProductIndex].quantity += quantity;
     } else {
-      // If product doesn't exist, add it with the specified quantity
       storedProducts.push({
         ...productDetailData,
         quantity: quantity,
@@ -70,85 +68,99 @@ export function ProductDetail({ id, onClose }: ProductDetailProps) {
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
+      className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4"
       onClick={onClose}
     >
       <div
-        className="bg-white w-5/6 max-w-lg p-6 rounded-lg shadow-lg relative"
+        className="bg-white w-full max-w-lg rounded-lg shadow-lg relative overflow-y-auto max-h-[90vh]"
         onClick={(e) => e.stopPropagation()}
       >
         <button
-          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-2xl z-10 w-8 h-8 flex items-center justify-center"
           onClick={onClose}
         >
           &times;
         </button>
-        <div className="p-4">
-          <div className="flex flex-col md:flex-row items-center">
-            <div className="w-full md:w-1/2">
-              <img
-                src={productDetailData?.imgPath[0]}
-                alt={productDetailData?.name}
-                className="w-full h-auto text-gray-700 rounded-lg shadow-md"
-              />
-            </div>
-            <div className="w-full md:w-1/2 md:pl-8 mt-4 md:mt-0">
-              <h1 className="text-2xl text-gray-900 font-PretendardBold mb-2">
+
+        <div className="p-4 space-y-4">
+          {/* 상품 이미지 섹션 */}
+          <div className="w-full relative">
+            <img
+              src={productDetailData?.imgPath[0]}
+              alt={productDetailData?.name}
+              className="w-full h-auto rounded-lg shadow-md"
+            />
+          </div>
+
+          {/* 상품 정보 섹션 */}
+          <div className="w-full space-y-4">
+            <div className="flex items-start justify-between">
+              <h1 className="text-xl sm:text-2xl text-gray-900 font-PretendardBold">
                 {productDetailData?.name}
               </h1>
               {productDetailData?.isRecommend === 'Recommend' && (
-                <div className="text-yellow-500">
-                  <CiStar className="inline-block" />
+                <div className="text-yellow-500 ml-2">
+                  <CiStar className="text-xl" />
                 </div>
               )}
-              <p className="text-gray-700 mb-4 font-PretendardLight">
-                {productDetailData?.description}
-              </p>
-              <p className="text-2xl font-PretendardSemiBold text-gray-900 mb-4">
-                {productDetailData?.price}원
-              </p>
+            </div>
 
-              <p
-                className={`text-sm font-PretendardSemibold ${productDetailData?.status === 'SOLD_OUT' ? 'text-red-500' : 'text-green-500'}`}
-              >
-                {productDetailData?.status === 'SOLD_OUT' ? '품절' : '판매 중'}
-              </p>
-              {productDetailData?.status !== 'SOLD_OUT' && (
-                <div className="flex items-center mt-4 space-x-4">
-                  <div className="flex items-center border border-blue-500 rounded-md">
-                    <button
-                      onClick={decreaseQuantity}
-                      className="px-3 py-1 bg-blue-100 text-blue-600 hover:bg-blue-200 rounded-l-md transition-colors"
-                    >
-                      -
-                    </button>
-                    <span className="px-4 py-1 bg-white text-blue-800 font-PretendardSemiBold">
-                      {quantity}
-                    </span>
-                    <button
-                      onClick={increaseQuantity}
-                      className="px-3 py-1 bg-blue-100 text-blue-600 hover:bg-blue-200 rounded-r-md transition-colors"
-                    >
-                      +
-                    </button>
+            <p className="text-gray-700 text-sm sm:text-base font-PretendardLight">
+              {productDetailData?.description}
+            </p>
+
+            <p className="text-xl sm:text-2xl font-PretendardSemiBold text-gray-900">
+              {productDetailData?.price.toLocaleString()}원
+            </p>
+
+            <p
+              className={`text-sm font-PretendardSemibold ${
+                productDetailData?.status === 'SOLD_OUT'
+                  ? 'text-red-500'
+                  : 'text-green-500'
+              }`}
+            >
+              {productDetailData?.status === 'SOLD_OUT' ? '품절' : '판매 중'}
+            </p>
+
+            {/* 수량 선택 및 장바구니 버튼 */}
+            {productDetailData?.status !== 'SOLD_OUT' && (
+              <div className="flex items-center gap-4">
+                <div className="inline-flex items-center h-10 border border-gray-300 rounded-md">
+                  <button
+                    onClick={decreaseQuantity}
+                    className="w-10 h-full flex items-center justify-center text-gray-600 hover:bg-gray-100 rounded-l-md transition-colors"
+                  >
+                    -
+                  </button>
+                  <div className="w-12 h-full flex items-center justify-center border-x border-gray-300 bg-white text-gray-800">
+                    {quantity}
                   </div>
                   <button
-                    onClick={handleAddToCart}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md shadow-lg transition duration-300"
+                    onClick={increaseQuantity}
+                    className="w-10 h-full flex items-center justify-center text-gray-600 hover:bg-gray-100 rounded-r-md transition-colors"
                   >
-                    장바구니에 추가
+                    +
                   </button>
                 </div>
-              )}
-            </div>
+                <button
+                  onClick={handleAddToCart}
+                  className="flex-1 h-10 bg-blue-600 hover:bg-blue-700 text-white px-6 rounded-md  transition-colors"
+                >
+                  장바구니에 추가
+                </button>
+              </div>
+            )}
           </div>
-          {message && (
-            <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-slate-700 text-white font-PretendardSemiBold px-4 py-2 rounded-md shadow-lg transition-opacity duration-500 whitespace-nowrap">
-              {message}
-            </div>
-          )}
         </div>
       </div>
+
+      {/* 알림 메시지 */}
+      {message && (
+        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-slate-700 text-white font-PretendardSemiBold px-4 py-2 rounded-md shadow-lg transition-opacity duration-500 whitespace-nowrap z-50">
+          {message}
+        </div>
+      )}
     </div>
   );
 }

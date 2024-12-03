@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaShoppingCart } from 'react-icons/fa';
+import { FaShoppingCart, FaRegTrashAlt } from 'react-icons/fa';
 
 interface CartItem {
   id: number;
@@ -150,7 +150,7 @@ const Cart: React.FC = () => {
                   onClick={handleClearCart}
                   className="text-red-400 hover:text-red-500 transition duration-300"
                 >
-                  🗑️
+                  <FaRegTrashAlt />
                 </button>
               )}
             </div>
