@@ -15,28 +15,28 @@ const CartItemRow: React.FC<{
   isRemoving: boolean;
 }> = ({ item, onIncrease, onDecrease, isRemoving }) => (
   <div
-    className={`flex w-full items-center mb-2 p-2  transition duration-300 transform ${isRemoving ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}
+    className={`flex w-full items-center mb-2 p-2 transition duration-300 transform ${isRemoving ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}
   >
-    <div className="text-white w-1/2 pr-2 text-sm sm:text-base truncate">
+    <div className="text-white w-2/5 pr-2 text-sm sm:text-base truncate">
       {item.name}
     </div>
-    <div className="flex w-1/2 items-center justify-end">
-      <div className="text-white text-right font-semibold text-sm sm:text-base mr-2">
+    <div className="flex w-3/5 items-center justify-end gap-2">
+      <div className="text-white text-right font-semibold text-sm whitespace-nowrap min-w-[80px]">
         {(item.price * item.quantity).toLocaleString()}원
       </div>
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center gap-1 sm:gap-2">
         <button
           onClick={() => onDecrease(item.id)}
-          className="bg-red-700 hover:bg-red-800 text-white w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center rounded-md transition duration-300"
+          className="bg-red-700 hover:bg-red-800 text-white w-6 h-6 flex items-center justify-center rounded-md transition duration-300 text-sm"
         >
           -
         </button>
-        <div className="text-white font-semibold text-sm sm:text-lg">
+        <div className="text-white font-semibold w-4 text-center text-sm">
           {item.quantity}
         </div>
         <button
           onClick={() => onIncrease(item.id)}
-          className="bg-green-700 hover:bg-green-800 text-white w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center rounded-md transition duration-300"
+          className="bg-green-700 hover:bg-green-800 text-white w-6 h-6 flex items-center justify-center rounded-md transition duration-300 text-sm"
         >
           +
         </button>
