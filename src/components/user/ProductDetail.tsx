@@ -115,7 +115,9 @@ export function ProductDetail({ id, onClose }: ProductDetailProps) {
               </p>
 
               <p className="text-xl sm:text-2xl font-PretendardSemiBold text-gray-900">
-                {productDetailData?.price.toLocaleString()}원
+                {productDetailData?.price
+                  ? `${productDetailData?.price.toLocaleString()}원`
+                  : '설명참조'}
               </p>
 
               <p

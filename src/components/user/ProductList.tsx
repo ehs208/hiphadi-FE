@@ -123,7 +123,9 @@ export default function ProductList() {
                     product.status === 'SOLD_OUT' ? 'text-gray-500' : ''
                   }`}
                 >
-                  {product.price.toLocaleString()}원
+                  {product.price
+                    ? `${product.price.toLocaleString()}원`
+                    : '설명참조'}
                 </div>
               </div>
             ))}
