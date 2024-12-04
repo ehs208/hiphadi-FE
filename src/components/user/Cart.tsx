@@ -17,26 +17,26 @@ const CartItemRow: React.FC<{
   <div
     className={`flex w-full items-center mb-2 p-2 transition duration-300 transform ${isRemoving ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}
   >
-    <div className="text-white w-2/5 pr-2 text-sm sm:text-base truncate">
+    <div className="text-white w-2/5 pr-2 text-sm sm:text-base truncate font-PretendardLight">
       {item.name}
     </div>
     <div className="flex w-3/5 items-center justify-end gap-2">
-      <div className="text-white text-right font-semibold text-sm whitespace-nowrap min-w-[80px]">
+      <div className="text-white text-right font-PretendardMedium text-sm whitespace-nowrap min-w-[80px]">
         {(item.price * item.quantity).toLocaleString()}원
       </div>
       <div className="flex items-center gap-1 sm:gap-2">
         <button
           onClick={() => onDecrease(item.id)}
-          className="bg-red-700 hover:bg-red-800 text-white w-6 h-6 flex items-center justify-center rounded-md transition duration-300 text-sm"
+          className="bg-red-700/80 hover:bg-red-800 text-white w-6 h-6 flex items-center justify-center rounded-md transition duration-300 text-sm"
         >
           -
         </button>
-        <div className="text-white font-semibold w-4 text-center text-sm">
+        <div className="text-white font-PretendardMedium w-4 text-center text-sm">
           {item.quantity}
         </div>
         <button
           onClick={() => onIncrease(item.id)}
-          className="bg-green-700 hover:bg-green-800 text-white w-6 h-6 flex items-center justify-center rounded-md transition duration-300 text-sm"
+          className="bg-green-700/80 hover:bg-green-800 text-white w-6 h-6 flex items-center justify-center rounded-md transition duration-300 text-sm"
         >
           +
         </button>
@@ -124,11 +124,11 @@ const Cart: React.FC = () => {
     <div>
       <button
         onClick={toggleCart}
-        className="fixed bottom-4 right-4 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full shadow-lg transition duration-300 group"
+        className="fixed bottom-4 right-4 bg-blue-600/90 hover:bg-blue-700 text-white p-3 rounded-full shadow-lg transition duration-300 group"
       >
-        <FaShoppingCart />
+        <FaShoppingCart className="text-lg" />
         {cartItems.length > 0 && (
-          <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-2 py-1 group-hover:bg-red-600">
+          <span className="absolute -top-2 -right-2 bg-red-500/90 text-white text-xs rounded-full px-2 py-1 group-hover:bg-red-600 font-PretendardLight">
             {cartItems.length}
           </span>
         )}
@@ -144,11 +144,13 @@ const Cart: React.FC = () => {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-semibold text-white">장바구니</h2>
+              <h2 className="text-lg font-PretendardMedium text-white">
+                장바구니
+              </h2>
               {cartItems.length > 0 && (
                 <button
                   onClick={handleClearCart}
-                  className="text-red-400 hover:text-red-500 transition duration-300"
+                  className="text-red-400/90 hover:text-red-500 transition duration-300"
                 >
                   <FaRegTrashAlt />
                 </button>
@@ -169,16 +171,16 @@ const Cart: React.FC = () => {
                   ))}
                 </div>
                 <div className="mt-4 pt-4 border-t border-gray-700 flex items-center justify-between">
-                  <div className="text-white font-semibold text-lg">
+                  <div className="text-white font-PretendardMedium text-base">
                     총 결제 금액
                   </div>
-                  <div className="text-2xl text-white font-bold">
+                  <div className="text-xl text-white font-PretendardMedium">
                     {calculateTotalPrice().toLocaleString()}원
                   </div>
                 </div>
               </>
             ) : (
-              <p className="text-gray-400 text-center py-8">
+              <p className="text-gray-400 text-center py-8 font-PretendardLight">
                 장바구니에 상품이 없습니다.
               </p>
             )}
