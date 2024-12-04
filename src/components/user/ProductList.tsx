@@ -49,6 +49,14 @@ export default function ProductList() {
       return;
     }
 
+    if (!product.price) {
+      setMessage('카운터에 오셔서 주문해 주세요');
+      setTimeout(() => {
+        setMessage('');
+      }, 1000);
+      return;
+    }
+
     setClickedProductId(product.id);
     setIsModalOpen(true);
   };
@@ -132,7 +140,7 @@ export default function ProductList() {
           </div>
         ))}
       {message && (
-        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 font-PretendardSemiBold bg-slate-600 text-white px-4 py-2 rounded-md shadow-lg transition-opacity duration-500">
+        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-slate-700 text-white font-PretendardSemiBold px-4 py-2 rounded-md shadow-lg transition-opacity duration-500 whitespace-nowrap z-50">
           {message}
         </div>
       )}
