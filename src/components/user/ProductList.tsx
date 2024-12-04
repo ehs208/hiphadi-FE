@@ -12,6 +12,7 @@ interface ProductListData {
   description: string;
   price: number;
   category: string;
+  categoryEngName?: string;
   status: string;
   isRecommend: string;
 }
@@ -74,9 +75,14 @@ export default function ProductList() {
           <div key={category}>
             <div
               id={category}
-              className="text-xl font-PretendardExtraBold mb-2"
+              className="text-xl font-PretendardExtraBold mb-2 flex items-center"
             >
-              {category}
+              <span>{category}</span>
+              {groupedData[category][0]?.categoryEngName && (
+                <span className="ml-2 text-sm font-PretendardLight text-gray-300">
+                  {groupedData[category][0].categoryEngName}
+                </span>
+              )}
             </div>
             {groupedData[category].map((product) => (
               <div

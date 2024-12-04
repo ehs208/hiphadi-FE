@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { productDetailAPI } from '@api/user/productAPI';
 import { CiStar } from 'react-icons/ci';
+import { ImageOff } from 'lucide-react';
 import React, { useState } from 'react';
 
 interface ProductDetailData {
@@ -54,7 +55,6 @@ export function ProductDetail({ id, onClose }: ProductDetailProps) {
     sessionStorage.setItem('cart', JSON.stringify(storedProducts));
     setMessage(`장바구니에 ${quantity}개 추가되었습니다`);
 
-    // 메시지를 표시하고 0.3초 후에 모달을 닫음
     setTimeout(() => {
       setMessage('');
       onClose();
@@ -78,7 +78,6 @@ export function ProductDetail({ id, onClose }: ProductDetailProps) {
         className="bg-white w-full max-w-lg rounded-lg shadow-lg relative"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* X 버튼을 모달 상단으로 이동 */}
         <button
           className="absolute -top-10 right-0 text-white hover:text-gray-300 text-3xl w-8 h-8 flex items-center justify-center"
           onClick={onClose}
@@ -89,13 +88,23 @@ export function ProductDetail({ id, onClose }: ProductDetailProps) {
         <div className="max-h-[90vh] overflow-y-auto">
           <div className="space-y-4">
             {/* 상품 이미지 섹션 */}
-            <div className="w-full">
-              <img
-                src={productDetailData?.imgPath[0]}
-                alt={productDetailData?.name}
-                className="w-full h-auto rounded-t-lg"
-              />
-            </div>
+            {!productDetailData?.imgPath ||
+            productDetailData.imgPath.length === 0 ? (
+              <div className="w-full h-64 flex items-center justify-center bg-gray-100 rounded-t-lg">
+                <div className="text-center">
+                  <ImageOff className="w-12 h-12 mx-auto mb-2 text-gray-400" />
+                  <p className="text-gray-500">이미지 준비중</p>
+                </div>
+              </div>
+            ) : (
+              <div className="w-full">
+                <img
+                  src={productDetailData.imgPath[0]}
+                  alt={productDetailData.name}
+                  className="w-full h-auto rounded-t-lg"
+                />
+              </div>
+            )}
 
             {/* 상품 정보 섹션 */}
             <div className="w-full space-y-4 p-4">
