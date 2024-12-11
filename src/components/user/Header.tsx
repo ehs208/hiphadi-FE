@@ -4,7 +4,6 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { FaInstagram } from 'react-icons/fa6';
 import ImageHeader from './ImageHeader';
-import { Link } from 'react-router-dom';
 
 const Header: React.FC = () => {
   return (
@@ -29,12 +28,6 @@ const Header: React.FC = () => {
         <div className="text-sm font-PretendardThin">
           화장실 비밀번호: 28244*
         </div>
-        <Link
-          to="/privacypolicy"
-          className="text-sm font-PretendardThin hover:underline cursor-pointer"
-        >
-          개인정보 처리 방침
-        </Link>
       </div>
     </div>
   );
