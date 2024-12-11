@@ -6,6 +6,5 @@ axios.defaults.withCredentials = true;
 export const InstanceGuest = axios.create({
   headers: {
     'Content-Type': 'application/json',
-    'ngrok-skip-browser-warning': '69420',
   },
 });
