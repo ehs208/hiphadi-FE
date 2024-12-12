@@ -93,9 +93,7 @@ const PrivacyPolicy: React.FC = () => {
                   ehs122100@gmail.com
                 </a>
               </div>
-              <div className="text-gray-300 font-PretendardLight">
-                힙하디 가게
-              </div>
+              <div className="text-gray-300 font-PretendardLight">힙하디</div>
             </div>
           </div>
         </div>
