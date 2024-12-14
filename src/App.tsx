@@ -1,5 +1,7 @@
 import React from 'react';
 import './App.css';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router';
 import Header from '@components/user/Header';
 import MenuPage from '@pages/user/MenuPage';
 import Footer from '@components/user/Footer';
@@ -14,6 +16,17 @@ import ProtectedRoute from '@components/ProtectedRoute';
 const queryClient = new QueryClient();
 
 const App: React.FC = () => {
+  const location = useLocation(); // 현재 경로 추적
+
+  useEffect(() => {
+    const manifestLink = document.querySelector('link[rel="manifest"]');
+
+    if (location.pathname.startsWith('/admin')) {
+      manifestLink?.setAttribute('href', '/admin/manifest.json');
+    } else {
+      manifestLink?.setAttribute('href', '/manifest.json');
+    }
+  }, [location.pathname]);
   return (
     <div>
       <Router>
