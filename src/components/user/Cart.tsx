@@ -156,7 +156,12 @@ const Cart: React.FC = () => {
                 </button>
               )}
             </div>
-
+            <div className="flex-col items-center justify-items-center text-sm font-PretendardLight text-red-300">
+              <div>주문은 카운터에서만 가능합니다.</div>
+              <div>
+                장바구니에 상품을 담은 후, 카운터에 오셔서 주문해주세요.
+              </div>
+            </div>
             {cartItems.length > 0 ? (
               <>
                 <div className="space-y-2 max-h-[60vh] overflow-y-auto">

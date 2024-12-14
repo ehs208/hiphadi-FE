@@ -22,8 +22,9 @@ const Header: React.FC = () => {
             </a>
           </div>
         </div>
-        <div className="text-sm font-PretendardThin">
-          주문은 카운터에 오셔서 부탁드립니다.
+        <div className="text-sm font-PretendardSemiBold text-red-300">
+          <div>주문은 카운터에서만 가능합니다.</div>
+          <div>장바구니에 상품을 담은 후, 카운터에 오셔서 주문해주세요.</div>
         </div>
         <div className="text-sm font-PretendardThin">
           화장실 비밀번호: 28244*
