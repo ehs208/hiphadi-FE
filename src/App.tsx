@@ -22,9 +22,9 @@ const App: React.FC = () => {
     const manifestLink = document.querySelector('link[rel="manifest"]');
 
     if (location.pathname.startsWith('/admin')) {
-      manifestLink?.setAttribute('href', '/admin/manifest.json');
+      manifestLink?.setAttribute('href', '%PUBLIC_URL%/admin/manifest.json');
     } else {
-      manifestLink?.setAttribute('href', '/manifest.json');
+      manifestLink?.setAttribute('href', '%PUBLIC_URL%/manifest.json');
     }
   }, [location.pathname]);
   return (
