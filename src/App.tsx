@@ -19,28 +19,10 @@ import ProtectedRoute from '@components/ProtectedRoute';
 
 const queryClient = new QueryClient();
 
-const ManifestController: React.FC = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    const manifestLink = document.querySelector('link[rel="manifest"]');
-    if (manifestLink) {
-      if (location.pathname.startsWith('/admin')) {
-        manifestLink.setAttribute('href', '/admin/manifest.json');
-      } else {
-        manifestLink.setAttribute('href', '/manifest.json');
-      }
-    }
-  }, [location.pathname]);
-
-  return null;
-};
-
 const App: React.FC = () => {
   return (
     <Router>
       <QueryClientProvider client={queryClient}>
-        <ManifestController />
         <div>
           <Routes>
             <Route
