@@ -6,12 +6,8 @@ type SituationType = 'PARTY' | 'NORMAL';
 export default function Situation() {
   const mutation = useMutation({
     mutationFn: changeSituationAPI,
-    onSuccess: (data) => {
-      console.log('상태 변경 성공:', data);
-    },
-    onError: (error) => {
-      console.error('상태 변경 실패:', error);
-    },
+    onSuccess: (data) => {},
+    onError: (error) => {},
   });
 
   const handleSituationChange = (situation: SituationType) => {
@@ -19,9 +15,9 @@ export default function Situation() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="p-8 bg-white rounded-lg shadow-lg space-y-6">
-        <h1 className="text-2xl font-bold text-center text-gray-800">
+    <div className="min-h-screen flex items-center justify-center ">
+      <div className="p-8 space-y-6">
+        <h1 className="text-2xl font-PretendardBold text-center text-white">
           상태 변경
         </h1>
 

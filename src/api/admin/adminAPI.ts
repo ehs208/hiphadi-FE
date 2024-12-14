@@ -28,3 +28,14 @@ export const changeSituationAPI = async (situation: String) => {
     throw new Error(String(error));
   }
 };
+
+export const checkLoginAPI = async () => {
+  try {
+    const url = `${process.env.REACT_APP_A03_URL}`;
+    const response = await InstanceGuest.get(url);
+    console.log(response);
+    return response.data.data;
+  } catch (error) {
+    throw new Error(String(error));
+  }
+};
