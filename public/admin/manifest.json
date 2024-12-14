@@ -18,8 +18,8 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "/admin",
-  "scope": "/admin",
+  "start_url": "https://hiphadi.store/admin",
+  "scope": "https://hiphadi.store/admin",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"
