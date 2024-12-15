@@ -1,13 +1,25 @@
-import { useMutation } from '@tanstack/react-query';
+import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query';
 import { changeSituationAPI } from '@api/admin/adminAPI';
+import { checkSituationStatus } from '@api/admin/adminAPI';
 
 type SituationType = 'PARTY' | 'NORMAL';
 
 export default function Situation() {
+  const queryClient = useQueryClient();
+
   const mutation = useMutation({
     mutationFn: changeSituationAPI,
-    onSuccess: (data) => {},
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({
+        queryKey: ['status'],
+      });
+    },
     onError: (error) => {},
+  });
+
+  const { data: statusData } = useQuery({
+    queryKey: ['status'],
+    queryFn: checkSituationStatus,
   });
 
   const handleSituationChange = (situation: SituationType) => {
@@ -20,7 +32,7 @@ export default function Situation() {
         <h1 className="text-2xl font-PretendardBold text-center text-white">
           상태 변경
         </h1>
-
+        <div className="text-center text-white">현재 상태: {statusData}</div>
         <div className="flex gap-4">
           <button
             onClick={() => handleSituationChange('PARTY')}

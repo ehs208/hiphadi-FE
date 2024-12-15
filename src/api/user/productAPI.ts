@@ -19,7 +19,7 @@ export const productDetailAPI = async (id: number) => {
     ReactGA.event({
       category: 'Product',
       action: 'View Detail',
-      label: `Product Name: ${response.data.data.name}`,
+      label: `${response.data.data.name}`,
     });
 
     return response.data.data;
