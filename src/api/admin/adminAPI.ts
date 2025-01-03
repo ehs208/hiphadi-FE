@@ -33,7 +33,7 @@ export const checkLoginAPI = async () => {
   try {
     const url = `${process.env.REACT_APP_A03_URL}`;
     const response = await InstanceGuest.get(url);
-    return response.data.data;
+    return response.data.result;
   } catch (error) {
     throw new Error(String(error));
   }
@@ -43,7 +43,27 @@ export const checkSituationStatus = async () => {
   try {
     const url = `${process.env.REACT_APP_A02_URL}`;
     const response = await InstanceGuest.get(url);
-    return response.data.data;
+    return response.data.result;
+  } catch (error) {
+    throw new Error(String(error));
+  }
+};
+
+export const menuListAdminAPI = async (situation: String) => {
+  try {
+    const url = `${process.env.REACT_APP_A04_URL}/${situation}`;
+    const response = await InstanceGuest.get(url);
+    return response.data.result;
+  } catch (error) {
+    throw new Error(String(error));
+  }
+};
+
+export const menuDetailAdminAPI = async (id: number) => {
+  try {
+    const url = `${process.env.REACT_APP_A04_URL}/${id}`;
+    const response = await InstanceGuest.get(url);
+    return response.data.result;
   } catch (error) {
     throw new Error(String(error));
   }

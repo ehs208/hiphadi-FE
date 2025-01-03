@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { productDetailAPI } from '@api/user/productAPI';
+import { menuDetailAPI } from '@api/user/productAPI';
 import { CiStar } from 'react-icons/ci';
 import { ImageOff } from 'lucide-react';
 import React, { useState } from 'react';
@@ -20,14 +20,14 @@ interface ProductDetailProps {
   onClose: () => void;
 }
 
-export function ProductDetail({ id, onClose }: ProductDetailProps) {
+export function MenuDetail({ id, onClose }: ProductDetailProps) {
   const {
     data: productDetailData,
     error,
     isLoading,
   } = useQuery<ProductDetailData>({
-    queryKey: ['productDetail', id],
-    queryFn: () => productDetailAPI(id),
+    queryKey: ['menuDetailAPI', id],
+    queryFn: () => menuDetailAPI(id),
     refetchOnMount: 'always',
   });
 

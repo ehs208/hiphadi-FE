@@ -10,6 +10,7 @@ import PrivacyPolicy from '@pages/user/PrivacyPolicy';
 import AdminDashboard from '@pages/admin/AdminDashboard';
 import AdminLogin from '@pages/admin/AdminLogin';
 import ProtectedRoute from '@components/ProtectedRoute';
+import AdminMenuPage from '@pages/admin/AdminMenuPage';
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,10 @@ const App: React.FC = () => {
             <Route path="/privacypolicy" element={<PrivacyPolicy />} />
             <Route element={<ProtectedRoute />}>
               <Route path="/admin/dashboard" element={<AdminDashboard />} />
+              <Route
+                path="/admin/menu/list/:situation"
+                element={<AdminMenuPage />}
+              />
             </Route>
             <Route path="/admin/login" element={<AdminLogin />} />
           </Routes>

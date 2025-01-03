@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
-import { productListAPI } from '@api/user/productAPI';
+import { menuListAPI } from '@api/user/productAPI';
 import Tabs from './Tabs';
 import React, { useState } from 'react';
 import { IoMdStar } from 'react-icons/io';
-import { ProductDetail } from './ProductDetail';
+import { MenuDetail } from './MenuDetail';
 
 interface ProductListData {
   id: number;
@@ -17,10 +17,10 @@ interface ProductListData {
   isRecommend: string;
 }
 
-export default function ProductList() {
+export default function MenuList() {
   const { data: productData } = useQuery<ProductListData[]>({
-    queryKey: ['scheduledContest'],
-    queryFn: productListAPI,
+    queryKey: ['productList'],
+    queryFn: menuListAPI,
     refetchOnMount: 'always',
   });
 
@@ -151,7 +151,7 @@ export default function ProductList() {
         </div>
       )}
       {isModalOpen && clickedProductId !== null && (
-        <ProductDetail id={clickedProductId} onClose={closeModal} />
+        <MenuDetail id={clickedProductId} onClose={closeModal} />
       )}
     </div>
   );

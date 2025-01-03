@@ -1,17 +1,18 @@
 import { InstanceGuest } from '../../lib/axiosConfig';
 import ReactGA from 'react-ga4';
 
-export const productListAPI = async () => {
+export const menuListAPI = async () => {
   try {
     const url = `${process.env.REACT_APP_P01_URL}`;
     const response = await InstanceGuest.get(url);
-    return response.data.data;
+    console.log(response.data.result);
+    return response.data.result;
   } catch (error) {
     throw new Error(String(error));
   }
 };
 
-export const productDetailAPI = async (id: number) => {
+export const menuDetailAPI = async (id: number) => {
   try {
     const url = `${process.env.REACT_APP_P02_URL}/${id}`;
     const response = await InstanceGuest.get(url);
@@ -19,10 +20,10 @@ export const productDetailAPI = async (id: number) => {
     ReactGA.event({
       category: 'Product',
       action: 'View Detail',
-      label: `${response.data.data.name}`,
+      label: `${response.data.result}`,
     });
 
-    return response.data.data;
+    return response.data.result;
   } catch (error) {
     throw new Error(String(error));
   }
