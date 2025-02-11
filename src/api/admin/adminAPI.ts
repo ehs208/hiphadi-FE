@@ -2,7 +2,7 @@ import { InstanceGuest } from '../../lib/axiosConfig';
 
 export const adminLoginAPI = async (data: any) => {
   try {
-    const url = `${process.env.REACT_APP_A01_URL}`;
+    const url = '/api/admin/login';
 
     const formData = new URLSearchParams();
     formData.append('username', data.username);
@@ -21,7 +21,7 @@ export const adminLoginAPI = async (data: any) => {
 
 export const changeSituationAPI = async (situation: String) => {
   try {
-    const url = `${process.env.REACT_APP_A02_URL}/${situation}`;
+    const url = `/api/admin/situation/${situation}`;
     const response = await InstanceGuest.patch(url);
     return response;
   } catch (error) {
@@ -31,7 +31,7 @@ export const changeSituationAPI = async (situation: String) => {
 
 export const checkLoginAPI = async () => {
   try {
-    const url = `${process.env.REACT_APP_A03_URL}`;
+    const url = '/api/admin/checkLogin';
     const response = await InstanceGuest.get(url);
     return response.data.result;
   } catch (error) {
@@ -41,7 +41,7 @@ export const checkLoginAPI = async () => {
 
 export const checkSituationStatus = async () => {
   try {
-    const url = `${process.env.REACT_APP_A02_URL}`;
+    const url = '/api/admin/situation';
     const response = await InstanceGuest.get(url);
     return response.data.result;
   } catch (error) {
@@ -51,7 +51,7 @@ export const checkSituationStatus = async () => {
 
 export const menuListAdminAPI = async (situation: String) => {
   try {
-    const url = `${process.env.REACT_APP_A04_URL}/${situation}`;
+    const url = `/api/admin/menu/list/${situation}`;
     const response = await InstanceGuest.get(url);
     return response.data.result;
   } catch (error) {
@@ -61,7 +61,7 @@ export const menuListAdminAPI = async (situation: String) => {
 
 export const menuDetailAdminAPI = async (id: number) => {
   try {
-    const url = `${process.env.REACT_APP_A04_URL}/${id}`;
+    const url = `/api/admin/menu/detail/${id}`;
     const response = await InstanceGuest.get(url);
     return response.data.result;
   } catch (error) {
