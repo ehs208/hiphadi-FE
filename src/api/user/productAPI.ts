@@ -3,7 +3,7 @@ import ReactGA from 'react-ga4';
 
 export const menuListAPI = async () => {
   try {
-    const url = `${process.env.REACT_APP_P01_URL}`;
+    const url = '/api/menu/list';
     const response = await InstanceGuest.get(url);
     console.log(response.data.result);
     return response.data.result;
@@ -14,7 +14,7 @@ export const menuListAPI = async () => {
 
 export const menuDetailAPI = async (id: number) => {
   try {
-    const url = `${process.env.REACT_APP_P02_URL}/${id}`;
+    const url = `$/api/menu/detail/${id}`;
     const response = await InstanceGuest.get(url);
 
     ReactGA.event({
