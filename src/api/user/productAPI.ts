@@ -14,7 +14,7 @@ export const menuListAPI = async () => {
 
 export const menuDetailAPI = async (id: number) => {
   try {
-    const url = `$/api/menu/detail/${id}`;
+    const url = `/api/menu/detail/${id}`;
     const response = await InstanceGuest.get(url);
 
     ReactGA.event({
