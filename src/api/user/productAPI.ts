@@ -17,10 +17,16 @@ export const menuDetailAPI = async (id: number) => {
     const url = `/api/menu/detail/${id}`;
     const response = await InstanceGuest.get(url);
 
-    ReactGA.event({
-      category: 'Product',
-      action: 'View Detail',
-      label: `${response.data.result}`,
+    ReactGA.event('view_item', {
+      currency: 'KRW',
+      value: response.data.result.price,
+      items: [
+        {
+          item_id: String(id),
+          item_name: response.data.result.name,
+          price: response.data.result.price,
+        },
+      ],
     });
 
     return response.data.result;
