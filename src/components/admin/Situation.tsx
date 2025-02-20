@@ -27,7 +27,7 @@ export default function Situation() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center ">
+    <div className="flex items-center justify-center ">
       <div className="p-8 space-y-6">
         <h1 className="text-2xl font-PretendardBold text-center text-white">
           상태 변경
