@@ -8,7 +8,7 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-if (process.env.REACT_APP_GA4_TAG && process.env.NODE_ENV === 'production') {
+if (process.env.REACT_APP_GA4_TAG) {
   ReactGA.initialize(process.env.REACT_APP_GA4_TAG);
 }
 root.render(
