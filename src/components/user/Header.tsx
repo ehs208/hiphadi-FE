@@ -27,7 +27,7 @@ const Header: React.FC = () => {
           <div>장바구니에 상품을 담은 후, 카운터에 오셔서 주문해주세요.</div>
         </div>
         <div className="text-sm font-PretendardThin">
-          화장실 비밀번호: 28244*
+          화장실 비밀번호: 5456*
         </div>
       </div>
     </div>
