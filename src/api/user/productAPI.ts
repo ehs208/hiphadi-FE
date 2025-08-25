@@ -5,7 +5,6 @@ export const menuListAPI = async () => {
   try {
     const url = '/api/menu/list';
     const response = await InstanceGuest.get(url);
-    console.log(response.data.result);
     return response.data.result;
   } catch (error) {
     throw new Error(String(error));
