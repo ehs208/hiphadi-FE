@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { menuDetailAPI } from '@api/user/productAPI';
 import { CiStar } from 'react-icons/ci';
 import { ImageOff } from 'lucide-react';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { getImageUrl } from '@lib/axiosConfig';
 import { PriceType, getPriceOptions, createCartKey, formatPriceShort } from '@lib/priceUtils';
 
@@ -39,9 +39,13 @@ export function MenuDetail({ id, onClose }: ProductDetailProps) {
   const [selectedPriceType, setSelectedPriceType] = useState<PriceType>('single');
 
   // 가격 옵션 결정
-  const priceOptions = productDetailData
-    ? getPriceOptions(productDetailData.singlePrice, productDetailData.bottlePrice)
-    : [];
+  const priceOptions = useMemo(
+    () =>
+      productDetailData
+        ? getPriceOptions(productDetailData.singlePrice, productDetailData.bottlePrice)
+        : [],
+    [productDetailData]
+  );
 
   // 데이터 로드 시 기본 가격 타입 설정
   useEffect(() => {
