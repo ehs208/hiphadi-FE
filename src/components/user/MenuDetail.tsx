@@ -2,14 +2,16 @@ import { useQuery } from '@tanstack/react-query';
 import { menuDetailAPI } from '@api/user/productAPI';
 import { CiStar } from 'react-icons/ci';
 import { ImageOff } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getImageUrl } from '@lib/axiosConfig';
+import { PriceType, getPriceOptions, createCartKey, formatPriceShort } from '@lib/priceUtils';
 
 interface ProductDetailData {
   id: number;
   name: string;
   description: string;
-  price: number;
+  singlePrice: number | null;
+  bottlePrice: number | null;
   imageUrl: string | null;
   category: string;
   status: string;
@@ -34,27 +36,53 @@ export function MenuDetail({ id, onClose }: ProductDetailProps) {
 
   const [quantity, setQuantity] = useState(1);
   const [message, setMessage] = useState('');
+  const [selectedPriceType, setSelectedPriceType] = useState<PriceType>('single');
+
+  // 가격 옵션 결정
+  const priceOptions = productDetailData
+    ? getPriceOptions(productDetailData.singlePrice, productDetailData.bottlePrice)
+    : [];
+
+  // 데이터 로드 시 기본 가격 타입 설정
+  useEffect(() => {
+    if (priceOptions.length > 0 && !priceOptions.includes(selectedPriceType)) {
+      setSelectedPriceType(priceOptions[0]);
+    }
+  }, [priceOptions, selectedPriceType]);
+
+  // 선택된 가격 계산
+  const selectedPrice =
+    selectedPriceType === 'single'
+      ? productDetailData?.singlePrice
+      : productDetailData?.bottlePrice;
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
   const handleAddToCart = () => {
     const storedProducts = JSON.parse(sessionStorage.getItem('cart') || '[]');
+    const cartKey = createCartKey(productDetailData!.id, selectedPriceType);
+
     const existingProductIndex = storedProducts.findIndex(
-      (p: any) => p.id === productDetailData?.id
+      (p: any) => p.cartKey === cartKey
     );
 
     if (existingProductIndex !== -1) {
       storedProducts[existingProductIndex].quantity += quantity;
     } else {
       storedProducts.push({
-        ...productDetailData,
+        cartKey,
+        id: productDetailData!.id,
+        name: productDetailData!.name,
+        price: selectedPrice,
+        priceType: selectedPriceType,
         quantity: quantity,
       });
     }
 
     sessionStorage.setItem('cart', JSON.stringify(storedProducts));
-    setMessage(`장바구니에 ${quantity}개 추가되었습니다`);
+    const typeLabel = selectedPriceType === 'bottle' ? ' (바틀)' : '';
+    setMessage(`장바구니에 ${quantity}개${typeLabel} 추가되었습니다`);
 
     setTimeout(() => {
       setMessage('');
@@ -124,11 +152,46 @@ export function MenuDetail({ id, onClose }: ProductDetailProps) {
                 {productDetailData?.description}
               </p>
 
-              <p className="text-xl sm:text-2xl font-PretendardSemiBold text-lounge-gold-light">
-                {productDetailData?.price
-                  ? `${productDetailData?.price.toLocaleString()}원`
-                  : '설명참조'}
-              </p>
+              {/* 싱글/바틀 선택 UI (둘 다 있을 때만 표시) */}
+              {priceOptions.length === 2 && (
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setSelectedPriceType('single')}
+                    className={`flex-1 py-3 px-4 rounded-lg font-PretendardMedium transition-all duration-200 ${
+                      selectedPriceType === 'single'
+                        ? 'bg-lounge-gold text-lounge-bg shadow-gold-glow'
+                        : 'bg-lounge-surface border border-lounge-border text-lounge-text-secondary hover:border-lounge-gold/50'
+                    }`}
+                  >
+                    <div className="text-sm">싱글</div>
+                    <div className="text-lg font-PretendardBold">
+                      {formatPriceShort(productDetailData!.singlePrice!)}
+                    </div>
+                  </button>
+                  <button
+                    onClick={() => setSelectedPriceType('bottle')}
+                    className={`flex-1 py-3 px-4 rounded-lg font-PretendardMedium transition-all duration-200 ${
+                      selectedPriceType === 'bottle'
+                        ? 'bg-lounge-gold text-lounge-bg shadow-gold-glow'
+                        : 'bg-lounge-surface border border-lounge-border text-lounge-text-secondary hover:border-lounge-gold/50'
+                    }`}
+                  >
+                    <div className="text-sm">바틀</div>
+                    <div className="text-lg font-PretendardBold">
+                      {formatPriceShort(productDetailData!.bottlePrice!)}
+                    </div>
+                  </button>
+                </div>
+              )}
+
+              {/* 가격 표시 (선택 UI가 없을 때만) */}
+              {priceOptions.length === 1 && (
+                <p className="text-xl sm:text-2xl font-PretendardSemiBold text-lounge-gold-light">
+                  {selectedPrice
+                    ? `${selectedPrice.toLocaleString()}원${selectedPriceType === 'bottle' ? ' (바틀)' : ''}`
+                    : '설명참조'}
+                </p>
+              )}
 
               <p
                 className={`text-sm font-PretendardSemibold ${

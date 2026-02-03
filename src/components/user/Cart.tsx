@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { FaShoppingCart, FaRegTrashAlt } from 'react-icons/fa';
+import { PriceType } from '@lib/priceUtils';
 
 interface CartItem {
+  cartKey: string;
   id: number;
   name: string;
   price: number;
+  priceType: PriceType;
   quantity: number;
 }
 
 const CartItemRow: React.FC<{
   item: CartItem;
-  onIncrease: (id: number) => void;
-  onDecrease: (id: number) => void;
+  onIncrease: (cartKey: string) => void;
+  onDecrease: (cartKey: string) => void;
   isRemoving: boolean;
 }> = ({ item, onIncrease, onDecrease, isRemoving }) => (
   <div
@@ -19,6 +22,9 @@ const CartItemRow: React.FC<{
   >
     <div className="text-lounge-text w-2/5 pr-2 text-sm sm:text-base truncate font-PretendardLight">
       {item.name}
+      {item.priceType === 'bottle' && (
+        <span className="ml-1 text-lounge-gold text-xs">(B)</span>
+      )}
     </div>
     <div className="flex w-3/5 items-center justify-end gap-2">
       <div className="text-lounge-gold-light text-right font-PretendardMedium text-sm whitespace-nowrap min-w-[80px]">
@@ -26,7 +32,7 @@ const CartItemRow: React.FC<{
       </div>
       <div className="flex items-center gap-1 sm:gap-2">
         <button
-          onClick={() => onDecrease(item.id)}
+          onClick={() => onDecrease(item.cartKey)}
           className="bg-lounge-danger/80 hover:bg-lounge-danger text-lounge-text w-7 h-7 flex items-center justify-center rounded-md transition duration-300 text-sm"
         >
           -
@@ -35,7 +41,7 @@ const CartItemRow: React.FC<{
           {item.quantity}
         </div>
         <button
-          onClick={() => onIncrease(item.id)}
+          onClick={() => onIncrease(item.cartKey)}
           className="bg-lounge-success/80 hover:bg-lounge-success text-lounge-text w-7 h-7 flex items-center justify-center rounded-md transition duration-300 text-sm"
         >
           +
@@ -49,7 +55,7 @@ const Cart: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [itemsToRemove, setItemsToRemove] = useState<number[]>([]);
+  const [itemsToRemove, setItemsToRemove] = useState<string[]>([]);
 
   const toggleCart = () => {
     if (isOpen) {
@@ -69,39 +75,39 @@ const Cart: React.FC = () => {
   };
 
   const handleClearCart = () => {
-    setItemsToRemove(cartItems.map((item) => item.id));
+    setItemsToRemove(cartItems.map((item) => item.cartKey));
     setTimeout(() => {
       updateCart([]);
       setItemsToRemove([]);
     }, 300);
   };
 
-  const handleIncreaseQuantity = (id: number) => {
+  const handleIncreaseQuantity = (cartKey: string) => {
     const updatedCartItems = cartItems.map((item) =>
-      item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+      item.cartKey === cartKey ? { ...item, quantity: item.quantity + 1 } : item
     );
     updateCart(updatedCartItems);
   };
 
-  const handleDecreaseQuantity = (id: number) => {
+  const handleDecreaseQuantity = (cartKey: string) => {
     const updatedCartItems = cartItems.map((item) =>
-      item.id === id
+      item.cartKey === cartKey
         ? { ...item, quantity: Math.max(0, item.quantity - 1) }
         : item
     );
 
     const itemToRemove = updatedCartItems.find(
-      (item) => item.id === id && item.quantity === 0
+      (item) => item.cartKey === cartKey && item.quantity === 0
     );
 
     if (itemToRemove) {
-      setItemsToRemove((prev) => [...prev, id]);
+      setItemsToRemove((prev) => [...prev, cartKey]);
       setTimeout(() => {
         const filteredCartItems = updatedCartItems.filter(
-          (item) => item.id !== id
+          (item) => item.cartKey !== cartKey
         );
         updateCart(filteredCartItems);
-        setItemsToRemove((prev) => prev.filter((itemId) => itemId !== id));
+        setItemsToRemove((prev) => prev.filter((key) => key !== cartKey));
       }, 300);
     } else {
       updateCart(updatedCartItems);
@@ -167,11 +173,11 @@ const Cart: React.FC = () => {
                 <div className="space-y-1 max-h-[60vh] overflow-y-auto">
                   {cartItems.map((item) => (
                     <CartItemRow
-                      key={item.id}
+                      key={item.cartKey}
                       item={item}
                       onIncrease={handleIncreaseQuantity}
                       onDecrease={handleDecreaseQuantity}
-                      isRemoving={itemsToRemove.includes(item.id)}
+                      isRemoving={itemsToRemove.includes(item.cartKey)}
                     />
                   ))}
                 </div>

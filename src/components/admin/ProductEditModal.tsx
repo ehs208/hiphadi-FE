@@ -21,7 +21,8 @@ interface ProductFormData {
   name: string;
   engName: string | null;
   description: string | null;
-  price: number | '' | null;
+  singlePrice: number | null;
+  bottlePrice: number | null;
   categoryId: number | '' | null;
   imageUrl: string | null;
 }
@@ -42,10 +43,12 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
   const [name, setName] = useState('');
   const [engName, setEngName] = useState('');
   const [description, setDescription] = useState('');
-  const [price, setPrice] = useState<number | ''>('');
+  const [singlePrice, setSinglePrice] = useState<number | ''>('');
+  const [bottlePrice, setBottlePrice] = useState<number | ''>('');
   const [categoryId, setCategoryId] = useState<number | ''>('');
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [showGallery, setShowGallery] = useState(false);
+  const [priceError, setPriceError] = useState('');
 
   const { data: categories } = useQuery<Category[]>({
     queryKey: ['categories'],
@@ -63,7 +66,8 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
       setName(productDetail.name || '');
       setEngName(productDetail.engName || '');
       setDescription(productDetail.description || '');
-      setPrice(productDetail.price || '');
+      setSinglePrice(productDetail.singlePrice || '');
+      setBottlePrice(productDetail.bottlePrice || '');
       setCategoryId(productDetail.categoryId || '');
       setImageUrl(productDetail.imageUrl || null);
     }
@@ -105,11 +109,20 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // 가격 유효성 검증: 싱글 또는 바틀 중 최소 하나는 필수
+    if (!singlePrice && !bottlePrice) {
+      setPriceError('싱글 가격 또는 바틀 가격 중 하나는 입력해야 합니다.');
+      return;
+    }
+    setPriceError('');
+
     const data = {
       name,
       engName: engName || null,
       description: description || null,
-      price: price || null,
+      singlePrice: singlePrice || null,
+      bottlePrice: bottlePrice || null,
       categoryId: categoryId || null,
       imageUrl: imageUrl || null,
     };
@@ -179,18 +192,45 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
 
           <div>
             <label className="block text-sm font-PretendardMedium text-lounge-text-secondary mb-1">
-              가격 *
+              가격 (싱글 또는 바틀 중 최소 하나 입력) *
             </label>
-            <input
-              type="number"
-              value={price}
-              onChange={(e) =>
-                setPrice(e.target.value === '' ? '' : Number(e.target.value))
-              }
-              className="w-full bg-lounge-surface border border-lounge-border rounded-lg p-3 text-lounge-text focus:outline-none focus:ring-2 focus:ring-lounge-gold/50 focus:border-lounge-gold transition-all duration-200"
-              min="0"
-              required
-            />
+            <div className="flex gap-3">
+              <div className="flex-1">
+                <label className="block text-xs text-lounge-text-muted mb-1">
+                  싱글 (1잔)
+                </label>
+                <input
+                  type="number"
+                  value={singlePrice}
+                  onChange={(e) => {
+                    setSinglePrice(e.target.value === '' ? '' : Number(e.target.value));
+                    setPriceError('');
+                  }}
+                  placeholder="예: 15000"
+                  className="w-full bg-lounge-surface border border-lounge-border rounded-lg p-3 text-lounge-text focus:outline-none focus:ring-2 focus:ring-lounge-gold/50 focus:border-lounge-gold transition-all duration-200"
+                  min="0"
+                />
+              </div>
+              <div className="flex-1">
+                <label className="block text-xs text-lounge-text-muted mb-1">
+                  바틀
+                </label>
+                <input
+                  type="number"
+                  value={bottlePrice}
+                  onChange={(e) => {
+                    setBottlePrice(e.target.value === '' ? '' : Number(e.target.value));
+                    setPriceError('');
+                  }}
+                  placeholder="예: 150000"
+                  className="w-full bg-lounge-surface border border-lounge-border rounded-lg p-3 text-lounge-text focus:outline-none focus:ring-2 focus:ring-lounge-gold/50 focus:border-lounge-gold transition-all duration-200"
+                  min="0"
+                />
+              </div>
+            </div>
+            {priceError && (
+              <p className="text-lounge-danger text-sm mt-1">{priceError}</p>
+            )}
           </div>
 
           <div>

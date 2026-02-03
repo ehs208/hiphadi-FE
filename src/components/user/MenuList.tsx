@@ -4,13 +4,15 @@ import Tabs from './Tabs';
 import React, { useState } from 'react';
 import { IoMdStar } from 'react-icons/io';
 import { MenuDetail } from './MenuDetail';
+import { formatPriceDisplay } from '@lib/priceUtils';
 
 interface ProductListData {
   id: number;
   name: string;
   engName: string;
   description: string;
-  price: number;
+  singlePrice: number | null;
+  bottlePrice: number | null;
   category: string;
   categoryEngName?: string;
   status: string;
@@ -50,7 +52,7 @@ export default function MenuList() {
       return;
     }
 
-    if (!product.price) {
+    if (!product.singlePrice && !product.bottlePrice) {
       setMessage('카운터에 오셔서 주문해 주세요');
       setTimeout(() => {
         setMessage('');
@@ -141,9 +143,7 @@ export default function MenuList() {
                     product.status === 'SOLD_OUT' ? 'text-lounge-text-muted' : 'text-lounge-gold-light'
                   }`}
                 >
-                  {product.price
-                    ? `${product.price.toLocaleString()}원`
-                    : '설명참조'}
+                  {formatPriceDisplay(product.singlePrice, product.bottlePrice)}
                 </div>
               </div>
             ))}
