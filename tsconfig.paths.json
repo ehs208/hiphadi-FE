@@ -5,7 +5,9 @@
       "@components/*": ["./components/*"],
       "@pages/*": ["./pages/*"],
       "@api/*": ["./api/*"],
-      "@images/*": ["./assets/images/*"]
+      "@images/*": ["./assets/images/*"],
+      "@lib/*": ["./lib/*"],
+      "@context/*": ["./context/*"]
     }
   }
 }

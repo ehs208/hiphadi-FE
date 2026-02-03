@@ -8,6 +8,8 @@ module.exports = {
       '@pages': path.resolve(__dirname, './src/pages'),
       '@images': path.resolve(__dirname, './src/assets/images'),
       '@api': path.resolve(__dirname, './src/api'),
+      '@lib': path.resolve(__dirname, './src/lib'),
+      '@context': path.resolve(__dirname, './src/context'),
     },
   },
 };

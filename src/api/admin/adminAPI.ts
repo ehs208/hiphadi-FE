@@ -1,13 +1,13 @@
 import { InstanceGuest } from '../../lib/axiosConfig';
+import { extractErrorMessage } from '../../lib/errorUtils';
 
+// Auth
 export const adminLoginAPI = async (data: any) => {
   try {
     const url = '/api/admin/login';
-
     const formData = new URLSearchParams();
     formData.append('username', data.username);
     formData.append('password', data.password);
-
     const response = await InstanceGuest.post(url, formData.toString(), {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -15,17 +15,7 @@ export const adminLoginAPI = async (data: any) => {
     });
     return response;
   } catch (error) {
-    throw new Error(String(error));
-  }
-};
-
-export const changeSituationAPI = async (situation: String) => {
-  try {
-    const url = `/api/admin/situation/${situation}`;
-    const response = await InstanceGuest.patch(url);
-    return response;
-  } catch (error) {
-    throw new Error(String(error));
+    throw new Error(extractErrorMessage(error));
   }
 };
 
@@ -35,85 +25,165 @@ export const checkLoginAPI = async () => {
     const response = await InstanceGuest.get(url);
     return response.data.result;
   } catch (error) {
-    throw new Error(String(error));
+    throw new Error(extractErrorMessage(error));
   }
 };
 
-export const checkSituationStatus = async () => {
+// Products CRUD
+export const getProductsAdminAPI = async () => {
   try {
-    const url = '/api/admin/situation';
-    const response = await InstanceGuest.get(url);
+    const response = await InstanceGuest.get('/api/admin/products');
     return response.data.result;
   } catch (error) {
-    throw new Error(String(error));
+    throw new Error(extractErrorMessage(error));
   }
 };
 
-export const menuListAdminAPI = async (situation: String) => {
+export const getProductDetailAdminAPI = async (id: number) => {
   try {
-    const url = `/api/admin/menu/list/${situation}`;
-    const response = await InstanceGuest.get(url);
+    const response = await InstanceGuest.get(`/api/admin/products/${id}`);
     return response.data.result;
   } catch (error) {
-    throw new Error(String(error));
+    throw new Error(extractErrorMessage(error));
   }
 };
 
-export const menuDetailAdminAPI = async (id: number) => {
+export const createProductAPI = async (data: any) => {
   try {
-    const url = `/api/admin/menu/detail/${id}`;
-    const response = await InstanceGuest.get(url);
+    const response = await InstanceGuest.post('/api/admin/products', data);
     return response.data.result;
   } catch (error) {
-    throw new Error(String(error));
+    throw new Error(extractErrorMessage(error));
   }
 };
 
-interface PopularMenu {
-  name: string;
-  views: number;
-}
+export const updateProductAPI = async (id: number, data: any) => {
+  try {
+    const response = await InstanceGuest.patch(`/api/admin/products/${id}`, data);
+    return response.data.result;
+  } catch (error) {
+    throw new Error(extractErrorMessage(error));
+  }
+};
 
-interface PopularMenuData {
-  menus: PopularMenu[];
-  totalViews: number;
-  totalMenuCount: number;
-}
+export const deleteProductAPI = async (id: number) => {
+  try {
+    const response = await InstanceGuest.delete(`/api/admin/products/${id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(extractErrorMessage(error));
+  }
+};
 
-/**
- * 특정 기간의 메뉴 조회 분석 데이터를 가져옵니다.
- * @param startDate 시작 날짜 (YYYY-MM-DD 형식)
- * @param endDate 종료 날짜 (YYYY-MM-DD 형식)
- * @returns 분석 데이터 응답
- */
-export const getAnalyticsReportAPI = async (
+export const toggleProductStatusAPI = async (id: number) => {
+  try {
+    const response = await InstanceGuest.patch(`/api/admin/products/${id}/status`);
+    return response.data.result;
+  } catch (error) {
+    throw new Error(extractErrorMessage(error));
+  }
+};
+
+export const toggleProductRecommendAPI = async (id: number) => {
+  try {
+    const response = await InstanceGuest.patch(`/api/admin/products/${id}/recommend`);
+    return response.data.result;
+  } catch (error) {
+    throw new Error(extractErrorMessage(error));
+  }
+};
+
+// Categories
+export const getCategoriesAPI = async () => {
+  try {
+    const response = await InstanceGuest.get('/api/admin/categories');
+    return response.data.result;
+  } catch (error) {
+    throw new Error(extractErrorMessage(error));
+  }
+};
+
+export const createCategoryAPI = async (data: any) => {
+  try {
+    const response = await InstanceGuest.post('/api/admin/categories', data);
+    return response.data.result;
+  } catch (error) {
+    throw new Error(extractErrorMessage(error));
+  }
+};
+
+export const updateCategoryAPI = async (id: number, data: any) => {
+  try {
+    const response = await InstanceGuest.patch(`/api/admin/categories/${id}`, data);
+    return response.data.result;
+  } catch (error) {
+    throw new Error(extractErrorMessage(error));
+  }
+};
+
+export const deleteCategoryAPI = async (id: number) => {
+  try {
+    const response = await InstanceGuest.delete(`/api/admin/categories/${id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(extractErrorMessage(error));
+  }
+};
+
+export const reorderCategoriesAPI = async (categoryIds: number[]) => {
+  try {
+    const response = await InstanceGuest.patch('/api/admin/categories/reorder', { categoryIds });
+    return response.data;
+  } catch (error) {
+    throw new Error(extractErrorMessage(error));
+  }
+};
+
+export const reorderProductsAPI = async (productIds: number[]) => {
+  try {
+    const response = await InstanceGuest.patch('/api/admin/products/reorder', { productIds });
+    return response.data;
+  } catch (error) {
+    throw new Error(extractErrorMessage(error));
+  }
+};
+
+// Statistics
+export const getPopularMenusAPI = async (
   startDate: string,
   endDate: string,
   limit: number
-): Promise<any> => {
+) => {
   try {
-    const url = `/api/admin/popular-menus?startDate=${startDate}&endDate=${endDate}&limit=${limit}`;
-    const response = await InstanceGuest.get(url);
+    const response = await InstanceGuest.get(
+      `/api/admin/statistics/popular-menus?startDate=${startDate}&endDate=${endDate}&limit=${limit}`
+    );
     return response.data.result;
   } catch (error) {
-    throw new Error(String(error));
+    throw new Error(extractErrorMessage(error));
   }
 };
 
-/**
- * 이미 적절한 형식으로 반환된 API 응답을 그대로 사용합니다.
- * @param analyticsData 분석 API 응답 데이터
- * @returns 형식화된 인기 메뉴 데이터
- */
-export const extractPopularMenus = (analyticsData: any): PopularMenuData => {
-  return analyticsData; // API가 이미 필요한 형식으로 데이터를 반환하므로 그대로 사용
+// Suggestions
+export const getSuggestionsAPI = async () => {
+  try {
+    const response = await InstanceGuest.get('/api/admin/suggestions');
+    return response.data.result;
+  } catch (error) {
+    throw new Error(extractErrorMessage(error));
+  }
 };
 
-/**
- * 날짜 객체를 'YYYY-MM-DD' 형식의 문자열로 변환합니다.
- * @param date 날짜 객체
- * @returns 형식화된 날짜 문자열
- */
+export const deleteSuggestionAPI = async (id: number) => {
+  try {
+    const response = await InstanceGuest.delete(`/api/admin/suggestions/${id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(extractErrorMessage(error));
+  }
+};
+
+// Utilities
 export const formatDateString = (date: Date): string => {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');

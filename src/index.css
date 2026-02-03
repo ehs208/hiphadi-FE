@@ -49,19 +49,44 @@
 
 body {
   @apply font-PretendardBlack;
-  margin: 0 auto; /* Center align the body content */
+  margin: 0;
   padding: 0;
   height: auto;
-  min-height: 100vh; /* Ensure the body covers the viewport height */
-  /*max-width: 370px; !* Set the maximum width to 370px *!*/
-  width: 100%; /* Make the width responsive */
+  min-height: 100vh;
+  width: 100%;
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  background-color: #1f1f1f;
-  align-items: center;
+  background-color: #0D0D0D;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Lounge theme scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0D0D0D;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2A2A2A;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3A3A3A;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection color for lounge feel */
+::selection {
+  background-color: rgba(200, 149, 108, 0.3);
+  color: #F5F0EB;
 }
 
 /*@media (min-width: 500px) {*/

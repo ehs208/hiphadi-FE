@@ -65,13 +65,13 @@ const Tabs: React.FC<TabsProps> = ({ categories }) => {
     <div id="tabs-container" className="w-full overflow-x-hidden">
       <div
         id="tabs"
-        className={`${isFixed ? 'fixed top-0 left-0 right-0 z-10 bg-[#1f1f1f]' : ''}  w-full overflow-x-scroll whitespace-nowrap items-center transition-all ${isFixed ? 'shadow-lg' : ''} ${isVisible || !isFixed ? 'opacity-100' : 'opacity-0'}`}
+        className={`${isFixed ? 'fixed top-0 left-0 right-0 z-10 bg-lounge-bg/95 backdrop-blur-sm border-b border-lounge-border' : ''}  w-full overflow-x-scroll whitespace-nowrap items-center transition-all ${isFixed ? 'shadow-lounge' : ''} ${isVisible || !isFixed ? 'opacity-100' : 'opacity-0'}`}
         style={{ transition: 'opacity 0.5s' }}
       >
         {categories.map((category) => (
           <button
             key={category}
-            className={`flex-auto text-sm font-PretendardBold text-white p-4 transition-colors duration-500 ${activeCategory === category ? 'bg-slate-800' : ''}`}
+            className={`flex-auto text-sm font-PretendardBold text-lounge-text-secondary py-4 px-4 min-h-[48px] transition-all duration-300 ${activeCategory === category ? 'text-lounge-gold bg-lounge-card border-b-2 border-lounge-gold' : 'hover:text-lounge-text'}`}
             onClick={() => handleScrollToCategory(category)}
           >
             {category}

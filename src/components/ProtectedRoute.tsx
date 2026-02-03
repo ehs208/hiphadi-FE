@@ -18,7 +18,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     data: checkLoginData,
     error,
     isLoading,
-  } = useQuery<any>({
+  } = useQuery<boolean>({
     queryKey: ['Auth'],
     queryFn: checkLoginAPI,
     refetchOnMount: 'always',
@@ -27,8 +27,13 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   });
 
   if (isLoading) {
-    // 로딩 컴포넌트를 별도로 만들어서 사용하는 것을 추천
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-lounge-bg">
+        <span className="text-lounge-text-secondary text-lg font-PretendardMedium">
+          Loading...
+        </span>
+      </div>
+    );
   }
 
   if (error) {
