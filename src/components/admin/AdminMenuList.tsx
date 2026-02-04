@@ -30,13 +30,15 @@ import {
 } from '@api/admin/adminAPI';
 import ProductEditModal from './ProductEditModal';
 import { useToast } from '@context/ToastContext';
+import { formatPriceDisplay } from '@lib/priceUtils';
 
 interface ProductListData {
   id: number;
   name: string;
   engName: string;
   description: string;
-  price: number | null;
+  singlePrice: number | null;
+  bottlePrice: number | null;
   category: string;
   categoryEngName?: string;
   categoryId: number;
@@ -98,7 +100,7 @@ const SortableCategory: React.FC<{
 const SortableProductItem: React.FC<{
   item: ProductListData;
   isDragMode: boolean;
-  formatPrice: (price: number | null) => string;
+  formatPrice: (item: ProductListData) => string;
   onToggleStatus: (id: number) => void;
   onToggleRecommend: (id: number) => void;
   onEdit: (id: number) => void;
@@ -171,7 +173,7 @@ const SortableProductItem: React.FC<{
       </div>
       <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-start mt-2 sm:mt-0 sm:space-y-2 flex-shrink-0">
         <div className="font-PretendardSemiBold text-base whitespace-nowrap text-lounge-gold-light">
-          {formatPrice(item.price)}
+          {formatPrice(item)}
         </div>
         {!isDragMode && (
           <div className="grid grid-cols-4 sm:flex sm:space-x-1 gap-0.5">
@@ -347,9 +349,8 @@ const AdminMenuList: React.FC = () => {
     setEditProductId(null);
   };
 
-  const formatPrice = (price: number | null) => {
-    if (price === null || price === undefined) return '설명참조';
-    return `${price.toLocaleString()}원`;
+  const formatPrice = (item: ProductListData) => {
+    return formatPriceDisplay(item.singlePrice, item.bottlePrice);
   };
 
   const handleDragStart = (event: DragStartEvent) => {
@@ -542,7 +543,7 @@ const AdminMenuList: React.FC = () => {
                         </div>
                       </div>
                       <div className="font-PretendardSemiBold text-base whitespace-nowrap text-lounge-gold-light">
-                        {formatPrice(item.price)}
+                        {formatPrice(item)}
                       </div>
                     </div>
                   );
@@ -652,7 +653,7 @@ const AdminMenuList: React.FC = () => {
                       )}
                     </div>
                     <div className="font-PretendardSemiBold text-sm whitespace-nowrap text-lounge-gold-light ml-2 flex-shrink-0">
-                      {formatPrice(item.price)}
+                      {formatPrice(item)}
                     </div>
                   </div>
                 ))}
@@ -712,7 +713,7 @@ const AdminMenuList: React.FC = () => {
                 </div>
                 <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-start mt-2 sm:mt-0 sm:space-y-2 flex-shrink-0">
                   <div className="font-PretendardSemiBold text-base whitespace-nowrap text-lounge-gold-light">
-                    {formatPrice(item.price)}
+                    {formatPrice(item)}
                   </div>
                   <div className="grid grid-cols-4 sm:flex sm:space-x-1 gap-0.5">
                     <button
