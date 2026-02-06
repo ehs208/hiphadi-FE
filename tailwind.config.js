@@ -4,15 +4,15 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        PretendardBlack: ['Pretendard-Black'],
-        PretendardExtraBold: ['Pretendard-ExtraBold'],
-        PretendardBold: ['Pretendard-Bold'],
-        PretendardSemiBold: ['Pretendard-SemiBold'],
-        PretendardMedium: ['Pretendard-Medium'],
-        PretendardRegular: ['Pretendard-Regular'],
-        PretendardLight: ['Pretendard-Light'],
-        PretendardExtraLight: ['Pretendard-ExtraLight'],
-        PretendardThin: ['Pretendard-Thin'],
+        PretendardBlack: ['Pretendard'],
+        PretendardExtraBold: ['Pretendard'],
+        PretendardBold: ['Pretendard'],
+        PretendardSemiBold: ['Pretendard'],
+        PretendardMedium: ['Pretendard'],
+        PretendardRegular: ['Pretendard'],
+        PretendardLight: ['Pretendard'],
+        PretendardExtraLight: ['Pretendard'],
+        PretendardThin: ['Pretendard'],
       },
       colors: {
         lounge: {

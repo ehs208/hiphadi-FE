@@ -1,51 +1,19 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: 'Pretendard-Black';
-  src: url('./assets/fonts/Pretendard-Black.ttf');
-}
-
-@font-face {
-  font-family: 'Pretendard-ExtraBold';
-  src: url('./assets/fonts/Pretendard-ExtraBold.ttf');
-}
-
-@font-face {
-  font-family: 'Pretendard-Bold';
-  src: url('./assets/fonts/Pretendard-Bold.ttf');
-}
-
-@font-face {
-  font-family: 'Pretendard-SemiBold';
-  src: url('./assets/fonts/Pretendard-SemiBold.ttf');
-}
-
-@font-face {
-  font-family: 'Pretendard-Medium';
-  src: url('./assets/fonts/Pretendard-Medium.ttf');
-}
-
-@font-face {
-  font-family: 'Pretendard-Regular';
-  src: url('./assets/fonts/Pretendard-Regular.ttf');
-}
-
-@font-face {
-  font-family: 'Pretendard-Light';
-  src: url('./assets/fonts/Pretendard-Light.ttf');
-}
-
-@font-face {
-  font-family: 'Pretendard-ExtraLight';
-  src: url('./assets/fonts/Pretendard-ExtraLight.ttf');
-}
-
-@font-face {
-  font-family: 'Pretendard-Thin';
-  src: url('./assets/fonts/Pretendard-Thin.ttf');
-}
+/* font-Pretendard* 클래스에 font-weight 매핑 (tailwind은 font-family만 설정하므로) */
+.font-PretendardBlack { font-weight: 900; }
+.font-PretendardExtraBold { font-weight: 800; }
+.font-PretendardBold { font-weight: 700; }
+.font-PretendardSemiBold { font-weight: 600; }
+.font-PretendardMedium { font-weight: 500; }
+.font-PretendardRegular { font-weight: 400; }
+.font-PretendardLight { font-weight: 300; }
+.font-PretendardExtraLight { font-weight: 200; }
+.font-PretendardThin { font-weight: 100; }
 
 body {
   @apply font-PretendardBlack;
