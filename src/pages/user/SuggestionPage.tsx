@@ -166,7 +166,7 @@ const SuggestionPage: React.FC = () => {
               메뉴로 돌아가기
             </Link>
             <span className="text-xs font-PretendardExtraLight text-lounge-text-muted">
-              &copy; 2025 힙하디. All rights reserved.
+              &copy; 2026 힙하디. All rights reserved.
             </span>
           </div>
         </div>

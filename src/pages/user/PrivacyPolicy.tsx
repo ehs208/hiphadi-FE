@@ -32,7 +32,7 @@ const PrivacyPolicy: React.FC = () => {
         </h1>
         <div className="w-12 h-0.5 bg-lounge-gold mb-6" />
         <p className="text-sm font-PretendardLight text-lounge-text-muted mb-8">
-          시행일: 2025년 1월 1일 | 최종 수정일: 2025년 2월 2일
+          시행일: 2026년 1월 1일 | 최종 수정일: 2026년 2월 2일
         </p>
 
         {/* Introduction */}
@@ -336,7 +336,7 @@ const PrivacyPolicy: React.FC = () => {
               제11조 (개인정보 처리방침 변경)
             </h2>
             <p className="text-lounge-text-secondary font-PretendardLight leading-relaxed text-sm sm:text-base">
-              이 개인정보 처리방침은 2025년 1월 1일부터 적용됩니다. 법령 및
+              이 개인정보 처리방침은 2026년 1월 1일부터 적용됩니다. 법령 및
               방침에 따른 변경 내용의 추가, 삭제 및 정정이 있는 경우에는
               변경사항의 시행 7일 전부터 웹사이트를 통하여 공지하겠습니다.
             </p>
@@ -353,7 +353,7 @@ const PrivacyPolicy: React.FC = () => {
               메뉴로 돌아가기
             </Link>
             <span className="text-xs font-PretendardExtraLight text-lounge-text-muted">
-              &copy; 2025 힙하디. All rights reserved.
+              &copy; 2026 힙하디. All rights reserved.
             </span>
           </div>
         </div>
