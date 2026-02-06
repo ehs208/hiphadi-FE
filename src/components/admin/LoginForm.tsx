@@ -27,8 +27,8 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="w-full max-w-md font-PretendardRegular min-h-screen flex items-center justify-center px-4">
-      <div className="w-full">
+    <div className="w-full font-PretendardRegular min-h-screen flex items-center justify-center px-4">
+      <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <h1 className="text-2xl font-PretendardExtraBold text-lounge-gold-light tracking-wide mb-2">
             힙하디
