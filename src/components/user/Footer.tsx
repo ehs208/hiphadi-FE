@@ -13,16 +13,9 @@ const Footer = () => {
             >
               개인정보 처리 방침
             </Link>
-            <span className="text-lounge-border">|</span>
-            <Link
-              to="/suggestions"
-              className="text-sm text-lounge-text-secondary hover:text-lounge-gold rounded-lg transition-colors duration-200 py-1 px-2"
-            >
-              익명 건의
-            </Link>
           </div>
           <div className="text-sm text-lounge-text-muted">
-            &copy; 2025 힙하디. All rights reserved.
+            &copy; 2026 힙하디. All rights reserved.
           </div>
         </div>
       </div>

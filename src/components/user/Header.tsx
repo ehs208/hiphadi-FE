@@ -1,5 +1,6 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -43,8 +44,17 @@ const Header: React.FC = () => {
             {getSetting('intro_en', 'Please show your selected items at the counter. Payment is also at the counter!')}
           </div>
         </div>
-        <div className="text-sm font-PretendardThin text-lounge-text-secondary mt-3 border-t border-lounge-border pt-3">
-          {getSetting('bathroom_password', '화장실 비밀번호: 5456*')}
+        <div className="text-sm font-PretendardThin text-lounge-text-secondary mt-3 border-t border-lounge-border pt-3 flex items-center justify-between">
+          <span>{getSetting('bathroom_password', '화장실 비밀번호: 5456*')}</span>
+          <Link
+            to="/suggestions"
+            className="flex items-center gap-1.5 px-3.5 py-2 border border-lounge-gold/30 rounded-md bg-lounge-card/50 hover:border-lounge-gold hover:bg-lounge-card-hover transition-all duration-300 text-sm font-PretendardMedium text-lounge-gold-light"
+          >
+            <span>익명 건의</span>
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </Link>
         </div>
       </div>
     </div>
